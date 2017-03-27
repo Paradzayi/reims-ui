@@ -4,7 +4,7 @@
       :menus = "sidebarMenus"
     >
     </sidebar>
-    <div class="col-md-9">
+    <div class="col-sm-9 col-sm-offset-3">
       <router-view></router-view>
     </div>
   </div>
@@ -34,3 +34,8 @@
 </script>
 
 <style src="./assets/vendor/bootstrap/css/bootstrap.min.css"></style>
+<style media="screen">
+  #app {
+    height: 100%;
+  }
+</style>
