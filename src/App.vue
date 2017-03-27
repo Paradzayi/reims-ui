@@ -1,6 +1,9 @@
 <template>
   <div id="app" class="row">
-    <sidebar></sidebar>
+    <sidebar
+      :menus = "sidebarMenus"
+    >
+    </sidebar>
     <div class="col-md-9">
       <router-view></router-view>
     </div>
@@ -13,12 +16,19 @@
 
 <script>
   import Sidebar from './components/Sidebar/Sidebar.vue'
+  import config from './modules/config'
 
   export default {
     name: 'app',
 
     components: {
       Sidebar
+    },
+
+    data () {
+      return {
+        sidebarMenus: config.sidebar.menus
+      }
     }
   }
 </script>
