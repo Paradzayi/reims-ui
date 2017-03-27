@@ -22,8 +22,7 @@
 
 
   .sidebar {
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 25px;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
     background-color: #f5f5f5;
