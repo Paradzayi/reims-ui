@@ -3,7 +3,7 @@ module.exports = {
     menus: [
       {
         title: 'Home',
-        url: '/home'
+        url: '/'
       },
       {
         title: 'Settings',
