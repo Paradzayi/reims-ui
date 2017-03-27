@@ -1,6 +1,10 @@
 <template>
   <div class="col-sm-3 col-md-2 sidebar">
-
+    <ul class="nav nav-sidebar">
+      <li v-for = "menu in menus">
+        <router-link :to="menu.url">{{menu.title}}</router-link>
+      </li>
+    </ul>
   </div>
 </template>
 
