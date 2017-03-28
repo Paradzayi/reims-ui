@@ -2,7 +2,7 @@
   <div class="sidebar">
     <ul class="nav nav-sidebar">
       <li v-for = "menu in menus">
-        <router-link :to="menu.url"><span :class="menu.icon"></span></router-link>
+        <router-link :to="menu.url" :title="menu.title"><span :class="menu.icon"></span></router-link>
       </li>
     </ul>
   </div>
