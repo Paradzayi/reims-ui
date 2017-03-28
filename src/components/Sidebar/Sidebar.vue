@@ -2,16 +2,25 @@
   <div class="sidebar">
     <ul class="nav nav-sidebar">
       <li v-for = "menu in menus">
-        <router-link :to="menu.url" :title="menu.title"><span :class="menu.icon"></span></router-link>
+        <!-- Router links here -->
+        <router-link
+          :to="menu.url"
+          :title="menu.title">
+
+          <!-- Icon shown here -->
+          <span :class="menu.icon"></span>
+        </router-link>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+
   export default {
     props: ['menus']
   }
+
 </script>
 
 <style scoped>
@@ -19,7 +28,6 @@
   /*
    * Sidebar
    */
-
 
   .sidebar {
     position: fixed;
