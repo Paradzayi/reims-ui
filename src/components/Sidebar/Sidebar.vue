@@ -2,7 +2,7 @@
   <div class="col-sm-3 col-md-2 sidebar">
     <ul class="nav nav-sidebar">
       <li v-for = "menu in menus">
-        <router-link :to="menu.url">{{menu.title}}</router-link>
+        <router-link :to="menu.url"><span :class="menu.icon"></span></router-link>
       </li>
     </ul>
   </div>
