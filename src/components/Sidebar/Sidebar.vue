@@ -1,5 +1,5 @@
 <template>
-  <div class="col-sm-3 col-md-2 sidebar">
+  <div class="sidebar">
     <ul class="nav nav-sidebar">
       <li v-for = "menu in menus">
         <router-link :to="menu.url"><span :class="menu.icon"></span></router-link>
@@ -32,6 +32,7 @@
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
     background-color: #f5f5f5;
     border-right: 2px solid #eee;
+    width: 70px;
   }
 
   /* Sidebar navigation */
