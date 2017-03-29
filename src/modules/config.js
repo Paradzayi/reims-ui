@@ -3,27 +3,33 @@ module.exports = {
     menus: [
       {
         title: 'Home',
-        url: '/'
+        url: '/',
+        icon: 'glyphicon glyphicon-home'
       },
       {
         title: 'Settings',
-        url: '/settings'
+        url: '/settings',
+        icon: 'glyphicon glyphicon-cog'
       },
       {
         title: 'Students',
-        url: '/students'
+        url: '/students',
+        icon: 'glyphicon glyphicon-cog'
       },
       {
         title: 'Accounts',
-        url: '/accounts'
+        url: '/accounts',
+        icon: 'glyphicon glyphicon-cog'
       },
       {
         title: 'Danger zone',
-        url: '/danger zone'
+        url: '/danger zone',
+        icon: 'glyphicon glyphicon-remove'
       },
       {
         title: 'Sorroo',
-        url: '/soro'
+        url: '/soro',
+        icon: 'glyphicon glyphicon-asterisk'
       }
     ]
   }
