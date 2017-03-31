@@ -1,5 +1,8 @@
 var express = require('express');
 var app = express();
+var assets = require('./src/modules/assets');
+
+app.use('/assets', assets);
 
 // the port that the app willl luisten to fro any requests
 app.set('port',process.env.PORT || 5000);
