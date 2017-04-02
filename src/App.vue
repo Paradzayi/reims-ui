@@ -4,8 +4,11 @@
       :menus = "sidebarMenus"
     >
     </sidebar>
-    <div class="col-sm-11 main-content">
+    <div class="pusher">
       <router-view></router-view>
+      <div class="ui purple button">
+        A button courtesy of semantic ui
+      </div>
     </div>
   </div>
 </template>
