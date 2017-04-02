@@ -9,27 +9,27 @@ module.exports = {
       {
         title: 'Settings',
         url: '/settings',
-        icon: 'glyphicon glyphicon-cog'
+        icon: 'settings icon'
       },
       {
         title: 'Students',
         url: '/students',
-        icon: 'glyphicon glyphicon-cog'
+        icon: 'user icon'
       },
       {
         title: 'Accounts',
         url: '/accounts',
-        icon: 'glyphicon glyphicon-cog'
+        icon: 'money icon'
       },
       {
         title: 'Danger zone',
         url: '/danger zone',
-        icon: 'glyphicon glyphicon-remove'
+        icon: 'add icon'
       },
       {
         title: 'Sorroo',
         url: '/soro',
-        icon: 'glyphicon glyphicon-asterisk'
+        icon: 'star icon'
       }
     ]
   }

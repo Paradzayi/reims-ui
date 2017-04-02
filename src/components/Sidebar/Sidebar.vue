@@ -1,17 +1,16 @@
 <template>
-  <div class="sidebar">
-    <ul class="nav nav-sidebar">
-      <li v-for = "menu in menus">
-        <!-- Router links here -->
-        <router-link
-          :to="menu.url"
-          :title="menu.title">
+  <div class="ui labeled icon left  vertical sidebar menu  visible" >
+    <!-- Router links here -->
+    <a
+      class="item"
+      v-for = "menu in menus"
+      :to="menu.url"
+      :title="menu.title">
+gfgffg
+      <!-- Icon shown here -->
+      <i :class="menu.icon"></i>
+    </a>
 
-          <!-- Icon shown here -->
-          <span :class="menu.icon"></span>
-        </router-link>
-      </li>
-    </ul>
   </div>
 </template>
 
