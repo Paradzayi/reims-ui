@@ -2,6 +2,11 @@ var express = require('express');
 var app = express();
 var assets = require('./src/modules/assets');
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+})
+
 app.use('/assets', assets);
 
 // the port that the app willl luisten to fro any requests
