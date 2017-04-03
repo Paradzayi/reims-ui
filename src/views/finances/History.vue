@@ -59,9 +59,9 @@
     },
     methods: {
       getPaymentsHistory () {
-        axios.get(ApiConfig.baseUrl + '/payments/history')
+        axios.get(ApiConfig.baseUrl + '/api/payments/history')
           .then(response => {
-            this.paymentHistory = response.data
+            this.paymentHistory = response.data.paymenthistory
             this.loading = false
           })
           .catch(error => {
