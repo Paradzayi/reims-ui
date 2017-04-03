@@ -47,8 +47,8 @@
       <tfoot>
         <tr>
           <td colspan="10">
-            <div v-if="!stands.length" class="ui fluid">
-              <h5 style="color:orange" v-if="!loading && alert.show==false" class="huge text-muted"><i class="frown icon"></i> Could not find your stand.</h5>
+            <div v-if="!stands" class="ui fluid">
+              <h5 style="color:orange" v-if="!loading && alert.show==false" class="huge text-muted"><i class="frown icon"></i> No sold stands found.</h5>
               <h5 style="color:lightBlue"v-if="loading" class="ui loading fluid blue basic segment">Loading...</h5>
               <div :class="{ui: true, warning : alert.type == 'warning' ?  true : false, error: alert.type == 'error' ?  true : false, message:true }" v-if="alert.show">
 
