@@ -6,7 +6,9 @@ import Hello from '@/views/Hello'
 import Login from '@/views/Login'
 import Stands from '@/views/stands/Index'
 import Clients from '@/views/Clients'
-import Finances from '@/views/Finances'
+import Finances from '@/views/finances/Index'
+import History from '@/views/finances/History'
+import Summary from '@/views/finances/Summary'
 import Client from '@/views/Client'
 import AllStands from '@/views/stands/All'
 import AvailableStands from '@/views/stands/Available'
@@ -68,7 +70,17 @@ export default new Router({
     },
     {
       path: '/finances',
-      component: Finances
+      component: Finances,
+      children: [
+        {
+          path: '',
+          component: History
+        },
+        {
+          path: 'summary',
+          component: Summary
+        }
+      ]
     }
   ]
 })
