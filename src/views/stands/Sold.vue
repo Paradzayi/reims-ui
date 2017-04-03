@@ -72,7 +72,7 @@
 
     data () {
       return {
-        stands: [],
+        stands: null,
         alert: {
           show: false,
           type: 'info',
@@ -93,7 +93,7 @@
       axios.get(ApiConfig.baseUrl + '/api/stands/reservations')
         .then(response => {
           // get body data
-          this.stands = response.data.data
+          this.stands = response.data.soldstands
           this.loading = false
           console.log(this.stands)
         })
