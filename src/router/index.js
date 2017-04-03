@@ -4,14 +4,14 @@ import Hello from '@/views/Hello'
 
 // import the vue views to render as views
 import Login from '@/views/Login'
-import Stands from '@/views/Stands'
+import Stands from '@/views/stands/Stands'
 import Clients from '@/views/Clients'
 import Finances from '@/views/Finances'
 import Client from '@/views/Client'
-import AllStands from '@/views/AllStands'
-import AvailableStands from '@/views/AvailableStands'
-import ReservedStands from '@/views/ReservedStands'
-import SoldStands from '@/views/SoldStands'
+import AllStands from '@/views/stands/All'
+import AvailableStands from '@/views/stands/Available'
+import ReservedStands from '@/views/stands/Reserved'
+import SoldStands from '@/views/stands/Sold'
 
 Vue.use(Router)
 
