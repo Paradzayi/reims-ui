@@ -84,7 +84,7 @@
       axios.get(ApiConfig.baseUrl + '/api/stands/available')
         .then(response => {
           // get body data
-          this.stands = response.data.data
+          this.stands = response.data.availablestands
           this.loading = false
           console.log(this.stands)
         })
