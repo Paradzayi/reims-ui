@@ -23,7 +23,7 @@
               <div class="ui list">
 
                 <li class="item">{{client.name}} {{client.surname}}</li>
-                <li class="item"><a href="#">{{client.email}}</a></li>
+                <li class="item"><a :href="`mailto:${client.email}`">{{client.email}}</a></li>
                 <li class="item"><i class="marker icon"></i> {{client.address}}</li>
               </div>
             </div>
