@@ -34,3 +34,6 @@
     left: 80px;
   }
 </style>
+<style src="@/assets/vendor/semantic-ui/semantic-ui.min.css">
+
+</style>
