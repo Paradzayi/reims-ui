@@ -8,6 +8,10 @@ import Stands from '@/views/Stands'
 import Clients from '@/views/Clients'
 import Finances from '@/views/Finances'
 import Client from '@/views/Client'
+import AllStands from '@/views/AllStands'
+import AvailableStands from '@/views/AvailableStands'
+import ReservedStands from '@/views/ReservedStands'
+import SoldStands from '@/views/SoldStands'
 
 Vue.use(Router)
 
@@ -38,7 +42,29 @@ export default new Router({
     },
     {
       path: '/stands',
-      component: Stands
+      component: Stands,
+      children: [
+        // UserHome will be rendered inside User's <router-view>
+        // when /user/:id is matched
+        {
+          path: '',
+          component: AllStands
+        },
+        {
+          path: 'available',
+          component: AvailableStands
+        },
+        {
+          path: 'reserved',
+          component: ReservedStands
+        },
+        {
+          path: 'sold',
+          component: SoldStands
+        }
+        // ...other sub routes
+      ]
+
     },
     {
       path: '/finances',
