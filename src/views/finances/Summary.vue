@@ -95,9 +95,9 @@ export default {
   },
   methods: {
     getPaymentSummary () {
-      axios.get(ApiConfig.baseUrl + '/api/payments/summay')
+      axios.get(ApiConfig.baseUrl + '/api/payments/summary')
         .then(response => {
-          this.paymentSummary = response.data
+          this.paymentSummary = response.data.paymentssummary
           this.loading = false
         })
         .catch(error => {
