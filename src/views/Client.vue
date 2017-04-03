@@ -50,7 +50,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for = "history in clientHistory">
+            <tr v-for="history in clientHistory">
               <td><i class="home icon"></i> {{history.standid}}</td>
               <td>${{history.amount}}</td>
               <td>{{history.recnum}}</td>
@@ -60,7 +60,7 @@
           <tfoot>
             <tr>
               <td colspan="4">
-                <div v-if="!clientHistory.clientid">
+                <div v-if="!clientHistory.length">
                   <div :class="{ui: true, warning : true,  message:true }" >
                     <i class="warning sign icon"></i>
                     We are having trouble fetching the client history. Check if you are online and retry.
@@ -88,7 +88,7 @@
     data () {
       return {
         client: {},
-        clientHistory: {}
+        clientHistory: []
       }
     },
     methods: {
@@ -107,7 +107,9 @@
         let id = this.$route.params.id
         axios.get(ApiConfig.baseUrl + '/api/payments/history/' + id)
           .then(response => {
-            this.clientHistory = response.data.data
+            let history = []
+            history.push(response.data.data)
+            this.clientHistory = history
           })
           .catch(error => {
             console.log(error)
