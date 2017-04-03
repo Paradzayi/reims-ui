@@ -100,7 +100,7 @@
 
     methods: {
       selectStand (stand) {
-        this.$router.push({path: `/stands/${stand.stand}`})
+        this.$router.push({path: `/stands/${stand.standid}`})
       }
     }
   }
