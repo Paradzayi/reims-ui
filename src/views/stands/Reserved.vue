@@ -14,7 +14,7 @@
     <!-- create new stand -->
     <router-link to="/create/stand" class="ui right floated labeled primary icon button">
       <i class="add icon"></i>
-       Create new stand
+       Reserve new stand
      </router-link>
 
      <!-- the results table -->
@@ -67,17 +67,7 @@
 
     data () {
       return {
-        stands: [
-          {
-            standid: '2345566',
-            city: 'Gweru',
-            township: 'Southview',
-            clientid: '63-77676663T-18',
-            reservationdate: 'yesterday',
-            expirydate: 'next week',
-            email: 'kgparadzayi@gmail.com'
-          }
-        ],
+        stands: [],
         alert: {
           show: false,
           type: 'info',
