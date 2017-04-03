@@ -31,7 +31,7 @@
             <td>
               <a @click="selectClient(client)"><i class="user outline icon"></i> {{client.name}} {{client.surname}}</a>
             </td>
-            <td><a href=""><i class="envelope icon"></i> {{client.email}}</a></td>
+            <td><a :href="`mailto:${client.email}`"><i class="envelope icon"></i> {{client.email}}</a></td>
             <td>
                 <p><i class="marker icon"></i> {{client.address}}</p>
             </td>
