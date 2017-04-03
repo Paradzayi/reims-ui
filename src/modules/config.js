@@ -32,5 +32,13 @@ module.exports = {
         icon: 'star icon'
       }
     ]
+  },
+
+  api: {
+    baseUrl: 'https://reims-app.herokuapp.com'
+
+    // for local testing purposes
+    // baseUrl: 'http://localhost:3000'
   }
+
 }
