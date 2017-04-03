@@ -1,6 +1,8 @@
 <template>
-  <div class="ui container segment">
-
+  <div class="ui container basic segment">
+    <div class="ui divided header">
+      Clients
+    </div>
     <!-- search for client -->
     <div class="ui right action input">
       <input v-model:value="searchString" @keyup.enter="searchClient" placeholder="Search client">
