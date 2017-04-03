@@ -4,7 +4,7 @@ import Hello from '@/views/Hello'
 
 // import the vue views to render as views
 import Login from '@/views/Login'
-import Stands from '@/views/stands/Stands'
+import Stands from '@/views/stands/Index'
 import Clients from '@/views/Clients'
 import Finances from '@/views/Finances'
 import Client from '@/views/Client'
