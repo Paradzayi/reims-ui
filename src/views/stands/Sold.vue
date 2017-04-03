@@ -29,7 +29,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-if="stands.length" v-for="stand in stands">
+        <tr v-if="stands" v-for="stand in stands">
             <td>
               <a @click="selectStand(stand)"><i class="home icon"></i> {{stand.standid}}</a>
             </td>
