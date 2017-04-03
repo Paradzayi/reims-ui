@@ -88,7 +88,7 @@
       axios.get(ApiConfig.baseUrl + '/api/stands/reservations')
         .then(response => {
           // get body data
-          this.stands = response.data.data
+          this.stands = response.data.reservedstands
           this.loading = false
           console.log(this.stands)
         })
