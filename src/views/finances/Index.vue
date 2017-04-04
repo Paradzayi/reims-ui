@@ -3,7 +3,7 @@
     <div class="row">
 
         <!--the menu that poins to the sub routes of the stands view -->
-        <div class="ui purple secondary pointing container menu">
+        <div class="ui orange secondary pointing container menu">
           <a
             id="history"
             href="#/finances"

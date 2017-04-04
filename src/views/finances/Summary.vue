@@ -1,7 +1,7 @@
 <template>
   <div class="ui container">
 
-    <h5 style="color:lightBlue"v-if="loading" class="ui loading fluid purple basic segment">Loading...</h5>
+    <h5 style="color:lightBlue"v-if="loading" class="ui loading fluid orange basic segment">Loading...</h5>
 
     <div :class="{ui: true, warning : alert.type == 'warning' ?  true : false, error: alert.type == 'error' ?  true : false, message:true }" v-if="alert.show">
       <p><i class="warning sign icon"></i>{{alert.message}}</p>
@@ -13,9 +13,9 @@
       <!-- Show the summary of a stand in a card -->
       <div class="ui card" v-for="summary in paymentSummary">
         <div class="ui center aligned image">
-          <div class="ui purple icon header">
+          <div class="ui orange icon header">
             <router-link :to="{ path: `/stands/${summary.standid}` }">
-              <i class="purple home outline icon"></i>
+              <i class="orange home outline icon"></i>
               Stand {{summary.standid}}
             </router-link>
 
@@ -23,7 +23,7 @@
         </div>
         <div class="content">
           <div class="description">
-            <table class="ui fluid purple table">
+            <table class="ui fluid orange table">
               <tbody>
                 <tr>
                   <td>

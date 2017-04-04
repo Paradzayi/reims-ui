@@ -3,7 +3,7 @@
     <div class="row">
 
         <!--the menu that poins to the sub routes of the stands view -->
-        <div class="ui purple secondary pointing container menu">
+        <div class="ui orange secondary pointing container menu">
           <a href="#/stands" id="all" @click="selectMenu('all')" class="active item">All</a>
           <a href="#/stands/available" id="available" @click="selectMenu('available')" class="item">Available</a>
           <a href="#/stands/reserved" id="reserved" @click="selectMenu('reserved')" class="item">Reserved</a>

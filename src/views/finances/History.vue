@@ -6,7 +6,7 @@
         <button class="ui mini button">Search</button>
     </div>
 
-    <h5 style="color:lightBlue"v-if="loading" class="ui loading fluid purple basic segment">Loading...</h5>
+    <h5 style="color:lightBlue"v-if="loading" class="ui loading fluid orange basic segment">Loading...</h5>
 
     <div :class="{ui: true, warning : alert.type == 'warning' ?  true : false, error: alert.type == 'error' ?  true : false, message:true }" v-if="alert.show">
 
@@ -19,7 +19,7 @@
         </div>
         <div class="content">
           <div class="summary">
-            <router-link :to="{ path: `/clients/${history.clientid}` }">{{history.firstname}} {{history.surname}}</router-link> paid ${{history.amount}} using cash for stand <router-link :to="{ path: `/stands/${history.standid}`}">{{history.standid}}</router-link> in {{history.township_name}}, {{history.city_name}}. Receipt number is <span class="ui mini purple label">{{history.receiptnum}}</span>
+            <router-link :to="{ path: `/clients/${history.clientid}` }">{{history.firstname}} {{history.surname}}</router-link> paid ${{history.amount}} using cash for stand <router-link :to="{ path: `/stands/${history.standid}`}">{{history.standid}}</router-link> in {{history.township_name}}, {{history.city_name}}. Receipt number is <span class="ui mini orange label">{{history.receiptnum}}</span>
           </div>
           <div class="meta">
             <a :href="`mailto:${history.email}`"><i class="envelope icon"></i> Send Email</a>
