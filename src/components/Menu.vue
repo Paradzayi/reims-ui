@@ -22,6 +22,11 @@ export default {
     selectMenu (value) {
       menu.changeMenuClases(value, this.menus, this.$el)
     }
+  },
+  mounted () {
+    let path = this.$route.path
+    let selectedMenu = path.substring(path.lastIndexOf('/') + 1, path.length)
+    menu.changeMenuClases(selectedMenu, this.menus, this.$el)
   }
 }
 </script>
