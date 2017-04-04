@@ -1,6 +1,5 @@
 <template>
   <div class="ui secondary orange pointing menu">
-    <a href="#" @click="selectMenu('')">Click me</a>
     <a href="#/" id="home" @click="selectMenu('home')" class="active item">Home</a>
     <a href="#/stands" id="stands" @click="selectMenu('stands')" class="item">Stands</a>
     <a href="#/clients" id="clients" @click="selectMenu('clients')" class="item">Clients</a>
@@ -12,12 +11,16 @@
 import menu from '@/modules/menu'
 
 export default {
-  methods: {
-    selectMenu (value) {
-      let menus = [
+  data () {
+    return {
+      menus: [
         'home', 'stands', 'clients', 'finances'
       ]
-      menu.changeMenuClases(value, menus, this.$el)
+    }
+  },
+  methods: {
+    selectMenu (value) {
+      menu.changeMenuClases(value, this.menus, this.$el)
     }
   }
 }
