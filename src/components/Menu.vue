@@ -1,14 +1,25 @@
 <template>
   <div class="ui secondary orange pointing menu">
-    <router-link to="/" class="active item">Home</router-link>
-    <router-link to="/stands" class="item">Stands</router-link>
-    <router-link to="/clients" class="item">Clients</router-link>
-    <router-link to="/finances" class="item">Finances</router-link>
+    <a href="#" @click="selectMenu('')">Click me</a>
+    <a href="#/" id="home" @click="selectMenu('home')" class="active item">Home</a>
+    <a href="#/stands" id="stands" @click="selectMenu('stands')" class="item">Stands</a>
+    <a href="#/clients" id="clients" @click="selectMenu('clients')" class="item">Clients</a>
+    <a href="#/finances" id="finances" @click="selectMenu('finances')" class="item">Finances</a>
   </div>
 </template>
 
 <script>
+import menu from '@/modules/menu'
+
 export default {
+  methods: {
+    selectMenu (value) {
+      let menus = [
+        'home', 'stands', 'clients', 'finances'
+      ]
+      menu.changeMenuClases(value, menus, this.$el)
+    }
+  }
 }
 </script>
 
