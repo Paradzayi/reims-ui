@@ -1,5 +1,5 @@
 <template>
-  <div class="ui secondary orange pointing menu">
+  <div class="ui secondary inverted large orange pointing menu">
     <a href="#/" id="home" @click="selectMenu('home')" class="active item">Home</a>
     <a href="#/stands" id="stands" @click="selectMenu('stands')" class="item">Stands</a>
     <a href="#/clients" id="clients" @click="selectMenu('clients')" class="item">Clients</a>
