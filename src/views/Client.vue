@@ -53,8 +53,8 @@
             <tr v-for="history in clientHistory">
               <td><i class="home icon"></i> {{history.standid}}</td>
               <td>${{history.amount}}</td>
-              <td>{{history.recnum}}</td>
-              <td>{{history.paymentcode}}</td>
+              <td>{{history.receiptnum}}</td>
+              <td>{{history.paymentmode}}</td>
             </tr>
           </tbody>
           <tfoot>
@@ -107,9 +107,7 @@
         let id = this.$route.params.id
         axios.get(ApiConfig.baseUrl + '/api/payments/history/' + id)
           .then(response => {
-            let history = []
-            history.push(response.data.data)
-            this.clientHistory = history
+            this.clientHistory = response.data.data
           })
           .catch(error => {
             console.log(error)
