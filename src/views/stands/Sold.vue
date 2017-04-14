@@ -90,7 +90,7 @@
     },
     created () {
       // GET /someUrl
-      axios.get(ApiConfig.baseUrl + '/api/stands/reservations')
+      axios.get(ApiConfig.baseUrl + '/api/stands/sold')
         .then(response => {
           // get body data
           this.stands = response.data.soldstands
