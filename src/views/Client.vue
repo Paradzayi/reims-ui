@@ -1,6 +1,6 @@
 <template >
   <div class="ui container segment">
-    <div class="ui grid">
+    <div class="ui stackable grid">
 
       <div class="four wide column">
         <div class="ui card">
