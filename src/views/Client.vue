@@ -5,12 +5,12 @@
       <div class="four wide column">
         <div class="ui card">
           <div class="content">
-            <button class="ui tiny labeled icon button" style="margin-bottom:10px">
+            <button class="ui mini left floated icon button">
               <i class="pencil icon"></i>
               Edit
             </button>
 
-            <button class="ui tiny red right floated labeled icon button" >
+            <button class="ui mini red right floated icon button" >
               <i class="remove icon"></i>
               Delete
             </button>
@@ -53,7 +53,11 @@
             <tr v-for="history in clientHistory">
               <td><i class="home icon"></i> {{history.standid}}</td>
               <td>${{history.amount}}</td>
-              <td>{{history.receiptnum}}</td>
+              <td>
+                <div class="ui orange basic label">
+                  {{history.receiptnum}}
+                </div>
+              </td>
               <td>{{history.paymentmode}}</td>
             </tr>
           </tbody>
