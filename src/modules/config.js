@@ -35,10 +35,10 @@ module.exports = {
   },
 
   api: {
-    baseUrl: 'https://reims-app.herokuapp.com'
+    // baseUrl: 'https://reims-app.herokuapp.com'
 
     // for local testing purposes
-    // baseUrl: 'http://localhost:3000'
+    baseUrl: 'http://localhost:3000'
   }
 
 }

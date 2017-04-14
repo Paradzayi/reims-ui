@@ -29,7 +29,7 @@
       <tbody>
         <tr v-if="stands.length" v-for="stand in stands">
             <td>
-              <a @click="selectStand(stand)"><i class="home icon"></i> {{stand.stand}}</a>
+              <a @click="selectStand(stand)"><i class="home icon"></i> {{stand.standid}}</a>
             </td>
             <td>{{stand.township}}</td>
             <td>{{stand.city}}</td>
@@ -100,7 +100,7 @@
 
     methods: {
       selectStand (stand) {
-        this.$router.push({path: `/stands/${stand.stand}`})
+        this.$router.push({path: `/stands/${stand.standid}`})
       }
     }
   }
