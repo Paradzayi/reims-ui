@@ -1,23 +1,39 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <router-view></router-view>
+  <div id="app" class="row">
+    <my-menu></my-menu>
+    <div class="pusher">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'app'
-}
+  import Menu from './components/Menu.vue'
+  import config from './modules/config'
+
+  export default {
+    name: 'app',
+
+    components: {
+      MyMenu: Menu
+    },
+
+    data () {
+      return {
+        sidebarMenus: config.sidebar.menus
+      }
+    }
+  }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style media="screen">
+  #app {
+    height: 100%;
+  }
+  .main-content {
+    left: 80px;
+  }
+</style>
+<style src="@/assets/vendor/semantic-ui/semantic-ui.min.css">
+
 </style>
