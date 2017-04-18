@@ -120,13 +120,17 @@
     methods: {
       searchClient () {
         this.loading = true
-        let params = {
-          params: {
-            firstname: this.search.firstName,
-          }
+
+        // Abstracttion for the params to be passed in the request
+        let queryOptions = {
+          params: {}
         }
 
-        axios.get(ApiConfig.baseUrl + '/api/clients/search', params)
+        // chose the entries that will be passed as params to the request
+        queryOptions.params.firstname = this.search.firstName !== '' ? this.search.firstName : null
+        queryOptions.params.surname = this.search.surname !== '' ? this.search.surname : null
+
+        axios.get(ApiConfig.baseUrl + '/api/clients/search', queryOptions)
           .then(response => {
             // get body data
             this.clients = []
