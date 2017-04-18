@@ -4,18 +4,32 @@
       Clients
     </div>
     <!-- search for client -->
-    <div class="ui right action input">
-      <input v-model:value="searchString" @keyup.enter="searchClient" placeholder="Search client">
-      <button @click="searchClient" class="ui primary icon button">
-        <i class="search icon"></i>
-      </button>
-    </div>
+    <form class="ui form">
+      <div class="four fields">
+          <div class="field">
+            <div class="ui input">
+              <input v-model:value="search.firstName" @keyup.enter="searchClient" placeholder="first name">
+            </div>
+          </div>
 
-    <!-- create new client -->
-    <router-link to="/create/client" class="ui right floated primary icon button">
-      <i class="add icon"></i>
-       Create new client
-     </router-link>
+          <div class="field">
+            <input  @keyup.enter="searchClient" placeholder="last name">
+          </div>
+
+          <div class="field">
+            <button @click="searchClient" class="ui primary icon button">
+              <i class="search icon"></i>
+            </button>
+          </div>
+          <div class="field">
+            <!-- create new client -->
+            <router-link to="/create/client" class="ui right floated primary icon button">
+              <i class="add icon"></i>
+               Create new client
+             </router-link>
+          </div>
+      </div>
+    </form>
 
      <!-- the results table -->
     <table class="ui fluid table">
