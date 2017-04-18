@@ -119,8 +119,13 @@
     methods: {
       searchClient () {
         this.loading = true
+        let params = {
+          params: {
+            firstname: this.search.firstName,
+          }
+        }
 
-        axios.get(ApiConfig.baseUrl + '/api/clients?name=' + this.searchString)
+        axios.get(ApiConfig.baseUrl + '/api/clients/search', params)
           .then(response => {
             // get body data
             this.clients = []
