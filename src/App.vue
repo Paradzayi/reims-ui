@@ -1,27 +1,21 @@
 <template>
   <div id="app" class="row">
-    <sidebar
-      :menus = "sidebarMenus"
-    >
-    </sidebar>
+    <my-menu></my-menu>
     <div class="pusher">
       <router-view></router-view>
-      <div class="ui purple button">
-        A button courtesy of semantic ui
-      </div>
     </div>
   </div>
 </template>
 
 <script>
-  import Sidebar from './components/Sidebar/Sidebar.vue'
+  import Menu from './components/Menu.vue'
   import config from './modules/config'
 
   export default {
     name: 'app',
 
     components: {
-      Sidebar
+      MyMenu: Menu
     },
 
     data () {
@@ -39,4 +33,7 @@
   .main-content {
     left: 80px;
   }
+</style>
+<style src="@/assets/vendor/semantic-ui/semantic-ui.min.css">
+
 </style>
