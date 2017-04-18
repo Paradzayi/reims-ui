@@ -8,12 +8,12 @@
       <div class="four fields">
           <div class="field">
             <div class="ui input">
-              <input v-model:value="search.firstName" @keyup.enter="searchClient" placeholder="first name">
+              <input v-model:value="search.firstName"  placeholder="first name">
             </div>
           </div>
 
           <div class="field">
-            <input  @keyup.enter="searchClient" placeholder="last name">
+            <input  v-model:value="search.surname" placeholder="last name">
           </div>
 
           <div class="field">
@@ -87,6 +87,7 @@
         },
         search: {
           firstName: '',
+          surname: ''
         },
         loading: () => {
           if (this.clients) {
