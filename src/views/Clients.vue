@@ -71,7 +71,9 @@
           type: 'info',
           message: ''
         },
-        searchString: '',
+        search: {
+          firstName: '',
+        },
         loading: () => {
           if (this.clients) {
             return false
