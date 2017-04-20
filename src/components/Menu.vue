@@ -4,6 +4,7 @@
     <a href="#/stands" id="stands" @click="selectMenu('stands')" class="item">Stands</a>
     <a href="#/clients" id="clients" @click="selectMenu('clients')" class="item">Clients</a>
     <a href="#/finances" id="finances" @click="selectMenu('finances')" class="item">Finances</a>
+    <a href="#/map" id="map" @click="selectMenu('map')" class="item">Map</a>
   </div>
 </template>
 
