@@ -67,9 +67,7 @@ export default {
       var map = new mapboxgl.Map(mapOptions)
       console.log('loading the map.............')
 
-      map.on('load', addSources())
-
-      function addSources () {
+      map.on('load', function () {
         console.log('inside the load event...')
         // when the map loads add a new layer
         // map.on('load', () => {
@@ -83,7 +81,7 @@ export default {
         map.addLayer({
           'id': 'stands',
           'type': 'fill',
-          'source': 'stands',
+          'source': 'cities',
           'paint': {
             'fill-color': 'white',
             'fill-opacity': 0.7,
@@ -92,8 +90,7 @@ export default {
         })
 
         console.log('Done loading the map...')
-      }
-    //  })
+      })
     },
 
     fetchMapData () {
