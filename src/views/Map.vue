@@ -12,15 +12,12 @@
     </div>
 
     <div class='twelve wide column'>
-      <div id='mapview' class="ui fluid orange inverted segment">
-        <div class="ui center aligned purple segment">
-          This is where the map is to be if it works out.
-          <br>
-          <div class="ui orange message"><i class="info icon"></i>Try connecting to the internet to see if the problem is not related to the lack of internet</div>
-          <br>
-          <i class="massive orange map icon"></i>
+      <div class="ui fluid orange inverted segment">
+        <div id='mapview' >
+
         </div>
       </div>
+
     </div>
   </div>
 </template>
