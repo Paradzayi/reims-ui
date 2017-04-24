@@ -89,7 +89,7 @@ export default {
           }
         })
 
-        console.log('Done loading the map...')
+        map.addControl(new mapboxgl.NavigationControl())
       })
     },
 
