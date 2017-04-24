@@ -58,7 +58,7 @@ export default {
       // initialisation options for mapbox
       let mapOptions = {
         container: 'mapview', // container id
-      //  style: 'mapbox://styles/mapbox/streets-v9', // stylesheet location
+        style: 'mapbox://styles/mapbox/streets-v9', // stylesheet location
         center: [30.15, -18.13], // starting position
         zoom: 9, // starting zoom
         minZoom: 8,
