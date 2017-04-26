@@ -13,7 +13,7 @@
     </div>
 
     <div class='twelve wide column'>
-      <div class="ui fluid orange inverted segment">
+      <div class="ui fluid orange segment">
         <div id='mapview' >
 
         </div>
