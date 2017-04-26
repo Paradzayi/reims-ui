@@ -57,7 +57,10 @@ export default {
       // The popup object
       popup: new mapboxgl.Popup({
         closeButton: false
-      })
+      }),
+
+      // Define the queryable layers
+      layers: ['stands', 'reservedStands']
     }
   },
 
@@ -85,9 +88,17 @@ export default {
     addMouseMoveEvent () {
       // Listen to the mousemove event
       this.map.on('mousemove', e => {
+        // Loop through all the registered (ones available for popup info)
+        this.layers.forEach(layer => {
+          // Deregister the layer if it does not exist on the map
+          if (!this.map.getLayer(layer)) {
+            this.layers.splice(this.layers.indexOf(layer), 1)
+          }
+        })
+
         // Query the features on the map
         let features = this.map.queryRenderedFeatures(e.point, {
-          layers: ['stands']
+          layers: this.layers
         })
 
         // Change the cursor style as a UI indicator.
@@ -102,12 +113,15 @@ export default {
         // The feature on top of the stack i.e the one pointed by the mouse.
         let feature = features[0]
 
-        // Align the popup to the point where the mouse is pointing
-        this.popup.setLngLat(polylabel(feature.geometry.coordinates))
+        // If there are features where the mouse is pointing show the popup
+        if (feature) {
+          // Align the popup to the point where the mouse is pointing
+          this.popup.setLngLat(polylabel(feature.geometry.coordinates))
 
-        // Place some data in the popup and add it to the map
-        this.popup.setHTML(`<p style="color:purple">hello world</p>`)
-          .addTo(this.map)
+          // Place some data in the popup and add it to the map
+          this.popup.setHTML(`<p style="color:purple">hello world</p>`)
+            .addTo(this.map)
+        }
       })
     },
 
@@ -247,6 +261,9 @@ export default {
               'fill-outline-color': 'sienna'
             }
           })
+
+          // Then register the layer with the component's data
+          this.layers.push('reservedStands')
         })
       .catch(err => {
         if (err) {
