@@ -1,13 +1,11 @@
 <template>
   <div class='ui stackable container grid'>
     <div class='four wide column'>
+      <div class="ui fluid centered orange pointing below basic label">
+        <p>Select any thing you want to see on the map</p>
+      </div>
       <div class='ui vertical  red  pointing fluid  menu'>
-        <div class='active item'>
-          <a href='#'>Cities</a>
-        </div>
-        <div class='item'>
-          <a href='#'>Cadastre</a>
-        </div>
+        <a :class="{active: geojson.reservedStands.features, item: true}" @click="fetchReservedStands">Reserved Stands</a>
         <a class="item" @click="fetchReservedStands">Reserved Stands</a>
       </div>
     </div>
