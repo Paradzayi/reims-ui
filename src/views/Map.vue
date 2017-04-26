@@ -52,7 +52,12 @@ export default {
       },
 
       // The map object
-      map: {}
+      map: {},
+
+      // The popup object
+      popup: new mapboxgl.Popup({
+        closeButton: false
+      })
     }
   },
 
@@ -78,11 +83,6 @@ export default {
     },
 
     addMouseMoveEvent () {
-      // Define popup here
-      let popup = new mapboxgl.Popup({
-        closeButton: false
-      })
-
       // Listen to the mousemove event
       this.map.on('mousemove', e => {
         // Query the features on the map
@@ -91,11 +91,11 @@ export default {
         })
 
         // Change the cursor style as a UI indicator.
-        this.map.getCanvas().style.cursor = features.length ? 'pointer' : ''
+        this.map.getCanvas().style.cursor = features ? 'pointer' : ''
 
         // Remove the popup if the point on the map does not have any features
-        if (!features.length) {
-          popup.remove()
+        if (!features) {
+          this.popup.remove()
           return
         }
 
@@ -103,10 +103,10 @@ export default {
         let feature = features[0]
 
         // Align the popup to the point where the mouse is pointing
-        popup.setLngLat(polylabel(feature.geometry.coordinates))
+        this.popup.setLngLat(polylabel(feature.geometry.coordinates))
 
         // Place some data in the popup and add it to the map
-        popup.setHTML(`<p style="color:purple">hello world</p>`)
+        this.popup.setHTML(`<p style="color:purple">hello world</p>`)
           .addTo(this.map)
       })
     },
