@@ -1,6 +1,6 @@
 <template>
   <div class='ui stackable container grid'>
-    <div class='two wide column'>
+    <div class='four wide column'>
       <div class='ui vertical  red  pointing fluid  menu'>
         <div class='active item'>
           <a href='#'>Cities</a>
