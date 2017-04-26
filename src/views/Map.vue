@@ -56,19 +56,9 @@ export default {
     }
   },
 
-  created () {
-    axios.get(ApiConfig.baseUrl + '/api/cities')
-      .then((response) => {
-        console.log(response.data.data[0])
-        this.geojson.cities = response.data.data[0]
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  },
-
   mounted () {
     this.initMap()
+    this.fetchBaseItems()
   },
 
   methods: {
@@ -143,6 +133,22 @@ export default {
           }
         })
 
+        this.map.addSource('cadastre', {
+          type: 'geojson',
+          'data': _this.geojson.cadastre
+        })
+
+        // Add stands layer
+        this.map.addLayer({
+          'id': 'cadsatre',
+          'type': 'fill',
+          'source': 'cadastre',
+          'paint': {
+            'fill-color': 'pink',
+            'fill-opacity': 0.2,
+            'fill-outline-color': 'red'
+          }
+        })
         // Add the Naviagtion control that allows one to pan and zoom the map
         this.map.addControl(new mapboxgl.NavigationControl())
       })
@@ -187,6 +193,25 @@ export default {
         })
     },
 
+    fetchBaseItems () {
+      var _this = this
+
+      function getCitiesData () {
+        return axios.get(ApiConfig.baseUrl + '/api/cities')
+      }
+
+      function getCadatreData () {
+        return axios.get(ApiConfig.baseUrl + '/api/cadastre')
+      }
+
+      axios.all([getCitiesData(), getCadatreData()])
+        .then(axios.spread(function (cities, cadastre) {
+          // Both requests are now complete
+          _this.geojson.cadastre = cadastre.data.data[0]
+          _this.geojson.cities = cities.data.data[0]
+        }))
+        .catch(console.log)
+    },
     fetchReservedStands () {
       console.log('fetching reserved stands')
       // fetch the geojson from server
