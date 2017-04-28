@@ -1,39 +1,63 @@
 <template>
   <div class='ui stackable container grid'>
-    <div class='four wide column'>
+    <!-- The menu and any stuff on the left hand side -->
+    <div class='five wide column'>
+
+      <!-- Label showing users where to click-->
       <div class="ui fluid centered orange pointing below basic label">
         <p>Select any thing you want to see on the map</p>
       </div>
+
+      <!-- The menu-->
       <div class='ui vertical  orange fluid  menu'>
-        <div :class="{active: geojson.reservedStands.features, item: true, link: true}" >
-          <a @click="fetchReservedStands">
+
+        <!-- The reservedStads menu item-->
+        <div
+          :class="{active: geojson.reservedStands.features, item: true, link: true}">
+
+          <!-- Fetch reserved items when you click here -->
+          <a
+            @click="fetchReservedStands">
             Reserved Stands
           </a>
-          <div class="ui orange basic label" v-if="geojson.reservedStands.features">
-           {{ geojson.reservedStands.features.length }}
+
+          <!-- show the user the number of reserved items -->
+          <div
+            class="ui orange basic label"
+            v-if = "geojson.reservedStands.features">
+            {{ geojson.reservedStands.features.length }}
           </div>
-          <div v-if="geojson.reservedStands.features">
+
+          <!-- Allow the user to toggle the layers if they are present -->
+          <div
+            v-if = "geojson.reservedStands.features">
             <p>
               <div class="ui toggle checkbox">
-              <input type="checkbox" name="" :checked="isLayerInMap('reservedStands')" @click="toggleLayer('reservedStands')">
-              <label>Show in map</label>
+                <input
+                  type="checkbox"
+                  :checked="isLayerInMap('reservedStands')"
+                  @click="toggleLayer('reservedStands')">
+                <label>Show in map</label>
               </div>
             </p>
           </div>
-        </div>
 
+        </div><!--/ The reservedStands menu item -->
+
+        <!-- Other menu items will come down here -->
         <a class="item" @click="fetchReservedStands">Reserved Stands</a>
       </div>
     </div>
 
-    <div class='twelve wide column'>
-      <div class="ui fluid orange segment">
-        <div id='mapview' >
+    <!-- The map stuff here -->
+    <div class='eleven wide column'>
 
-        </div>
+      <div class="ui fluid orange segment">
+        <!-- The map will be auto injected-->
+        <div id='mapview' ></div>
       </div>
 
-    </div>
+    </div><!--/ The map stuff here -->
   </div>
 </template>
 
@@ -285,6 +309,10 @@ export default {
           }
         })
     },
+
+    /*
+      fetch the reservedStands and store them locally in the data() function
+    */
     fetchReservedStands () {
       // fix for calling this component inside functions where this will be undifined
       var _this = this
