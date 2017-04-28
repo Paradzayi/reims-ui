@@ -44,6 +44,39 @@
 
         </div><!--/ The reservedStands menu item -->
 
+        <!-- The reservedStads menu item-->
+        <div
+          :class="{active: geojson.soldStands.features, item: true, link: true}">
+
+          <!-- Fetch reserved items when you click here -->
+          <a
+            @click="fetchSoldStands">
+            Sold Stands
+          </a>
+
+          <!-- show the user the number of reserved items -->
+          <div
+            class="ui orange basic label"
+            v-if = "geojson.soldStands.features">
+            {{ geojson.soldStands.features.length }}
+          </div>
+
+          <!-- Allow the user to toggle the layers if they are present -->
+          <div
+            v-if = "geojson.soldStands.features">
+            <p>
+              <div class="ui toggle checkbox">
+                <input
+                  type="checkbox"
+                  :checked="isLayerInMap('soldStands')"
+                  @click="toggleLayer('soldStands')">
+                <label>Show in map</label>
+              </div>
+            </p>
+          </div>
+
+        </div><!--/ The soldStands menu item -->
+
         <!-- Other menu items will come down here -->
         <a class="item" @click="fetchReservedStands">Reserved Stands</a>
       </div>
@@ -82,7 +115,8 @@ export default {
         cities: {},
         cadastre: {},
         stands: {},
-        reservedStands: {}
+        reservedStands: {},
+        soldStands: {}
       },
 
       // initialisation options for mapbox
@@ -365,6 +399,60 @@ export default {
       })
     },
 
+    /*
+      fetch the soldStands and store them locally in the data() function
+    */
+    fetchSoldStands () {
+      // fix for calling this component inside functions where this will be undifined
+      var _this = this
+
+      // fetch the geojson from server
+      axios.get(ApiConfig.baseUrl + '/api/stands/sold?map=true')
+        .then(response => {
+        // Found the data! save it locally
+          this.geojson.soldStands = response.data.soldstandsmap[0]
+
+          // only add the source if the source has not been added before
+          if (!this.map.getSource('soldStands')) {
+            // add source
+            this.map.addSource('soldStands', {
+              type: 'geojson',
+              'data': _this.geojson.soldStands
+            })
+          }
+
+          // Destroy any layer for reserved stands and add a new one
+          if (this.map.getLayer('soldStands')) {
+            this.map.removeLayer('soldStands')
+          }
+
+          // Define the reservedStandsStyle
+          let soldStandsStyle = {
+            'id': 'soldStands',
+            'type': 'fill',
+            'source': 'soldStands',
+            'paint': {
+              'fill-color': 'green',
+              'fill-opacity': 0.7,
+              'fill-outline-color': 'sienna'
+            }
+          }
+
+          // Add stands layer
+          this.map.addLayer(soldStandsStyle)
+
+          // Then register the layer with the component's data
+          this.layers.push('soldStands')
+
+          // Then register the style  with the component's data
+          this.layerStyles.push(soldStandsStyle)
+        })
+      .catch(err => {
+        if (err) {
+          console.log(err)
+        }
+      })
+    },
     /*
       add or remove layers. Says no to frequent server requests
     */
