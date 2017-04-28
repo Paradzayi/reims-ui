@@ -45,6 +45,11 @@ import polylabel from 'polylabel'
 let ApiConfig = config.api
 
 export default {
+  /*
+    The warehouse of this component.
+    Store anything that is required by more than
+    one function.
+  */
   data () {
     return {
 
@@ -74,7 +79,7 @@ export default {
       }),
 
       // Define the queryable layers
-      layers: ['stands', 'reservedStands'],
+      layers: [],
 
       // Define the style of the layers so that
       // they can be used to recreate the layer during toggling
@@ -82,13 +87,25 @@ export default {
     }
   },
 
+  /*
+    Code that is executed when the component has been compiled
+    and ready to be used.
+  */
   mounted () {
+    // Initilise the map and fetch the cadastre and stands (static parts of the map)
     this.initMap()
     this.fetchBaseItems()
   },
 
+  /*
+    The methods used to manipulate the state of the components
+    and fetch data, ect
+  */
   methods: {
 
+    /*
+      Make a new map and attach map event
+    */
     initMap: function () {
       // apply the accessToken and start the map
       mapboxgl.accessToken = 'pk.eyJ1IjoicmFpa28iLCJhIjoiSy1KVE82byJ9.dcia_8lqXX8DsL8czQNB9A'
@@ -103,6 +120,9 @@ export default {
       this.addMouseMoveEvent()
     },
 
+    /*
+      make the map responsive to movements of the mouse.
+    */
     addMouseMoveEvent () {
       // Listen to the mousemove event
       this.map.on('mousemove', e => {
@@ -143,7 +163,12 @@ export default {
       })
     },
 
+    /*
+      when the map loads add cities and cadastre sources
+      and create the static layers for them
+    */
     addLoadEvent () {
+      // fix for calling this component inside functions where this will be undifined
       var _this = this
 
       // Listen to the load event
@@ -186,11 +211,17 @@ export default {
       })
     },
 
+    /*
+      fetch data for the stands and store it in the data() function
+    */
     fetchStandsData () {
+      // fix for calling this component inside functions where this will be undifined
       var _this = this
+
       // fetch the geojson from server
       axios.get(ApiConfig.baseUrl + '/api/stands?map=true')
         .then(response => {
+          // Store the response for later use
           this.geojson.stands = response.data.data[0]
 
           // only add the source if the source has not been added before
@@ -206,6 +237,7 @@ export default {
           if (this.map.getLayer('stands')) {
             this.map.removeLayer('stands')
           }
+
           // Add stands layer
           this.map.addLayer({
             'id': 'stands',
@@ -225,7 +257,12 @@ export default {
         })
     },
 
+    /*
+      fetch the data fro the cities and cadastre and Store
+      it in the data() function
+    */
     fetchBaseItems () {
+      // fix for calling this component inside functions where this will be undifined
       var _this = this
 
       function getCitiesData () {
@@ -242,17 +279,21 @@ export default {
           _this.geojson.cadastre = cadastre.data.data[0]
           _this.geojson.cities = cities.data.data[0]
         }))
-        .catch(console.log)
+        .catch(err => {
+          if (err) {
+            console.log(err)
+          }
+        })
     },
     fetchReservedStands () {
-      console.log('fetching reserved stands')
+      // fix for calling this component inside functions where this will be undifined
+      var _this = this
+
       // fetch the geojson from server
       axios.get(ApiConfig.baseUrl + '/api/stands/reservations?map=true')
         .then(response => {
         // Found the data! save it locally
           this.geojson.reservedStands = response.data.reservedstandsmap[0]
-
-          var _this = this
 
           // only add the source if the source has not been added before
           if (!this.map.getSource('stands')) {
@@ -296,6 +337,9 @@ export default {
       })
     },
 
+    /*
+      add or remove layers. Says no to frequent server requests
+    */
     toggleLayer (value) {
       if (this.map.getLayer(value)) {
         // Remove the layer from the map
@@ -319,6 +363,9 @@ export default {
       }
     },
 
+    /*
+      check if the layer is in the map and return true else return false
+    */
     isLayerInMap (value) {
       // Return true if the layer is defined in the map
       return this.map.getLayer(value) !== undefined
