@@ -5,7 +5,11 @@
         <p>Select any thing you want to see on the map</p>
       </div>
       <div class='ui vertical  red  pointing fluid  menu'>
-        <a :class="{active: geojson.reservedStands.features, item: true}" @click="fetchReservedStands">Reserved Stands</a>
+        <a :class="{active: geojson.reservedStands.features, item: true}" @click="fetchReservedStands">Reserved Stands
+          <div class="ui orange basic label" v-if="geojson.reservedStands.features">
+           {{ geojson.reservedStands.features.length }}
+          </div>
+        </a>
         <a class="item" @click="fetchReservedStands">Reserved Stands</a>
       </div>
     </div>
