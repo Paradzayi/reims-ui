@@ -12,6 +12,14 @@
           <div class="ui orange basic label" v-if="geojson.reservedStands.features">
            {{ geojson.reservedStands.features.length }}
           </div>
+          <div v-if="geojson.reservedStands.features">
+            <p>
+              <div class="ui toggle checkbox">
+              <input type="checkbox" name="" :checked="isLayerInMap('reservedStands')" @click="toggleLayer('reservedStands')">
+              <label>Show in map</label>
+              </div>
+            </p>
+          </div>
         </div>
 
         <a class="item" @click="fetchReservedStands">Reserved Stands</a>
@@ -276,6 +284,26 @@ export default {
           console.log(err)
         }
       })
+    },
+
+    toggleLayer (value) {
+      if (this.map.getLayer(value)) {
+        // Remove the layer from the map
+        this.map.removeLayer(value)
+
+        // Register the layer
+        this.layers.splice(this.layers.indexOf('reservedStands'), 1)
+      } else {
+        // Code to add the layer again
+
+        // Then register the layer with the component's data
+        this.layers.push('reservedStands')
+      }
+    },
+
+    isLayerInMap (value) {
+      // Return true if the layer is defined in the map
+      return this.map.getLayer(value) !== undefined
     }
   }
 }
