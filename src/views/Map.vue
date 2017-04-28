@@ -74,7 +74,11 @@ export default {
       }),
 
       // Define the queryable layers
-      layers: ['stands', 'reservedStands']
+      layers: ['stands', 'reservedStands'],
+
+      // Define the style of the layers so that
+      // they can be used to recreate the layer during toggling
+      layerStyles: []
     }
   },
 
@@ -264,8 +268,8 @@ export default {
             this.map.removeLayer('reservedStands')
           }
 
-          // Add stands layer
-          this.map.addLayer({
+          // Define the reservedStandsStyle
+          let reservedStandsStyle = {
             'id': 'reservedStands',
             'type': 'fill',
             'source': 'stands',
@@ -274,10 +278,16 @@ export default {
               'fill-opacity': 0.7,
               'fill-outline-color': 'sienna'
             }
-          })
+          }
+
+          // Add stands layer
+          this.map.addLayer(reservedStandsStyle)
 
           // Then register the layer with the component's data
           this.layers.push('reservedStands')
+
+          // Then register the style  with the component's data
+          this.layerStyles.push(reservedStandsStyle)
         })
       .catch(err => {
         if (err) {
@@ -295,9 +305,17 @@ export default {
         this.layers.splice(this.layers.indexOf('reservedStands'), 1)
       } else {
         // Code to add the layer again
+        let layer = this.layerStyles.find(layer => {
+          return layer.id === value
+        })
 
-        // Then register the layer with the component's data
-        this.layers.push('reservedStands')
+        // Only add the layer if it is found
+        if (layer) {
+          this.map.addLayer(layer)
+
+          // Then register the layer with the component's data
+          this.layers.push('reservedStands')
+        }
       }
     },
 
