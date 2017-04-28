@@ -1,9 +1,11 @@
 <template>
-  <div class="ui secondary inverted large orange pointing menu">
-    <a href="#/" id="home" @click="selectMenu('home')" class="active item">Home</a>
-    <a href="#/stands" id="stands" @click="selectMenu('stands')" class="item">Stands</a>
-    <a href="#/clients" id="clients" @click="selectMenu('clients')" class="item">Clients</a>
-    <a href="#/finances" id="finances" @click="selectMenu('finances')" class="item">Finances</a>
+  <div class="ui mini orange segment">
+    <div class="ui secondary large orange menu">
+      <a href="#/" id="home" @click="selectMenu('home')" class="active item">Home</a>
+      <a href="#/stands" id="stands" @click="selectMenu('stands')" class="item">Stands</a>
+      <a href="#/clients" id="clients" @click="selectMenu('clients')" class="item">Clients</a>
+      <a href="#/finances" id="finances" @click="selectMenu('finances')" class="item">Finances</a>
+    </div>
   </div>
 </template>
 
@@ -31,5 +33,8 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
+.ui.mini.orange.segment {
+  height: 60px;
+}
 </style>
