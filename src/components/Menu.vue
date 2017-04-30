@@ -26,9 +26,31 @@ export default {
     }
   },
   mounted () {
+    // define the path
     let path = this.$route.path
-    let selectedMenu = path.substring(path.lastIndexOf('/') + 1, path.length)
-    menu.changeMenuClases(selectedMenu, this.menus, this.$el)
+
+    // set the rootPath to an empty string
+    var rootPath = ''
+
+    // loop through the path to get the root path
+    for (let i = 0; i < path.length; i++) {
+      // check if there is a / other than the zero index
+      if (i > 0 && path[i + 1] === '/') {
+        // if found terminate the loop by setting the index to the higest possible value
+        console.log('twerminating')
+        i = path.length
+      }
+
+      // make the rootPath start from the 1 index to skip the first instance of /
+      rootPath += path[i]
+    }
+
+    // check if the rootPth is the 'root' (mounting point) an set a default value
+    // else take the substring grom index 1 to ignore the /
+    rootPath = rootPath === '/' ? 'home' : rootPath.substring(1, rootPath.length)
+
+    // make the root menu active in the ui
+    menu.changeMenuClases(rootPath, this.menus, this.$el)
   }
 }
 </script>
