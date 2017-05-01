@@ -35,11 +35,13 @@ export default {
     // loop through the path to get the root path
     for (let i = 0; i < path.length; i++) {
       // check if there is a / other than the zero index
-      if (i > 0 && path[i + 1] === '/') {
+      if (i > 0 && path[i] === '/') {
         // if found terminate the loop by setting the index to the higest possible value
-        console.log('twerminating')
         i = path.length
       }
+
+      // Break if any part of the path is undefined. Usually its the last index that of the /.
+      if (path[i] === undefined) break
 
       // make the rootPath start from the 1 index to skip the first instance of /
       rootPath += path[i]
