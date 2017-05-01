@@ -56,7 +56,7 @@
 
           <!-- show the user the number of reserved items -->
           <div
-            class="ui orange basic label"
+            class="ui green basic label"
             v-if = "geojson.soldStands.features">
             {{ geojson.soldStands.features.length }}
           </div>
@@ -377,7 +377,7 @@ export default {
             'type': 'fill',
             'source': 'stands',
             'paint': {
-              'fill-color': 'white',
+              'fill-color': 'orange',
               'fill-opacity': 0.7,
               'fill-outline-color': 'sienna'
             }
