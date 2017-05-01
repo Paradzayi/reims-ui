@@ -412,6 +412,52 @@ export default {
 
           // Then register the style  with the component's data
           this.layerStyles.push(reservedStandsStyle)
+
+          this.popups.reservedStands = function (feature) {
+            let stand = feature.properties
+
+            let popupHTML = `
+            <div clas = "ui list">
+              <div class = "item">
+                <h3 class = "ui header">Stand <div class="ui horizontal orange label"> ${stand.standid} </div></h3>
+
+                <div class = "ui divider"></div>
+
+              </div>
+
+              <div class = "item">
+                <div class = "content">
+                  <strong class="header">Reserved By</strong>
+                  <div class = "description">
+                    ${stand.firstname} ${stand.surname}
+                  </div>
+                </div>
+              </div>
+
+              <div class = "item">
+                <div class = "content">
+                  <strong class="header">Reserved on</strong>
+                  <div class = "description">
+                    ${stand.reservationdate}
+                  </div>
+                </div>
+              </div>
+
+              <div class = "item">
+                <div class = "content">
+                  <strong class="header">Expiring on</strong>
+                  <div class = "description">
+                    <div class = "ui warning message">
+                      ${stand.expirydate}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            `
+            return popupHTML
+          }
         })
       .catch(err => {
         if (err) {
@@ -467,6 +513,41 @@ export default {
 
           // Then register the style  with the component's data
           this.layerStyles.push(soldStandsStyle)
+
+          this.popups.soldStands = function (feature) {
+            let stand = feature.properties
+
+            let popupHTML = `
+            <div clas = "ui list">
+              <div class = "item">
+                <h3 class = "ui green header"><div class="ui horizontal orange label"> ${stand.standid} </div></h3>
+
+                <div class = "ui divider"></div>
+
+              </div>
+
+              <div class = "item">
+                <div class = "content">
+                  <strong class="header">Sold to</strong>
+                  <div class = "description">
+                    ${stand.firstname} ${stand.surname}
+                  </div>
+                </div>
+              </div>
+
+              <div class = "item">
+                <div class = "content">
+                  <strong class="header">Email</strong>
+                  <div class = "description">
+                    <a href="mailto:${stand.email}">${stand.email}</a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            `
+            return popupHTML
+          }
         })
       .catch(err => {
         if (err) {
