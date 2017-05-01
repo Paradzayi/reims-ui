@@ -136,6 +136,12 @@ export default {
         closeButton: false
       }),
 
+      // The registration location of the individual popup html
+      popups: {
+        reservedStands: function () {},
+        soldStands: function () {}
+      },
+
       // Define the queryable layers
       layers: [],
 
@@ -214,8 +220,23 @@ export default {
           // Align the popup to the point where the mouse is pointing
           this.popup.setLngLat(polylabel(feature.geometry.coordinates))
 
+          // The variable to hold the dynamic popup html for the individual feature types
+          var popupHTML
+
+          // Show the appropriate popup when hovering a feature
+          // Differentiate using the layer.id because it is guaranteed
+          // To be unique for all use cases
+          switch (feature.layer.id) {
+            case 'reservedStands':
+              popupHTML = this.popups.reservedStands(feature)
+              break
+            case 'soldStands':
+              popupHTML = this.popups.soldStands(feature)
+              break
+          }
+
           // Place some data in the popup and add it to the map
-          this.popup.setHTML(`<p style="color:purple">hello world</p>`)
+          this.popup.setHTML(popupHTML)
             .addTo(this.map)
         }
       })
