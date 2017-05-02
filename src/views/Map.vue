@@ -485,6 +485,12 @@ export default {
         // Found the data! save it locally
           this.geojson.soldStands = response.data.soldstandsmap[0]
 
+          // first check if there are any features in the geojson
+          if (!!this.geojson.soldStands.features === false) {
+            // Exit the function if there aren't
+            return
+          }
+
           // only add the source if the source has not been added before
           if (!this.map.getSource('soldStands')) {
             // add source
