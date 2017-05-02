@@ -375,8 +375,14 @@ export default {
       // fetch the geojson from server
       axios.get(ApiConfig.baseUrl + '/api/stands/reservations?map=true')
         .then(response => {
-        // Found the data! save it locally
+          // Found the data! save it locally
           this.geojson.reservedStands = response.data.reservedstandsmap[0]
+
+          // first check if there are any features in the geojson
+          if (!!this.geojson.reservedStands.features === false) {
+            // Exit the function if there aren't
+            return
+          }
 
           // only add the source if the source has not been added before
           if (!this.map.getSource('stands')) {
