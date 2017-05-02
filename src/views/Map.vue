@@ -21,6 +21,13 @@
             Reserved Stands
           </a>
 
+          <!-- show the user a red zero if there are no reserved items -->
+          <div
+            class="ui red basic label"
+            v-if = "geojson.reservedStands.type && !!geojson.reservedStands.features === false">
+            0
+          </div>
+
           <!-- show the user the number of reserved items -->
           <div
             class="ui orange basic label"
@@ -53,6 +60,14 @@
             @click="fetchSoldStands">
             Sold Stands
           </a>
+
+
+          <!-- show the user a red zero if there are no sold items -->
+          <div
+            class="ui red basic label"
+            v-if = "geojson.soldStands.type && !!geojson.soldStands.features === false">
+            0
+          </div>
 
           <!-- show the user the number of reserved items -->
           <div
