@@ -547,7 +547,7 @@ export default {
             let popupHTML = `
             <div clas = "ui list">
               <div class = "item">
-                <h3 class = "ui green header"><div class="ui horizontal orange label"> ${stand.standid} </div></h3>
+                <h3 class = "ui green header">Stand <div class="ui horizontal orange label"> ${stand.standid} </div></h3>
 
                 <div class = "ui divider"></div>
 
