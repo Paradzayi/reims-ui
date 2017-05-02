@@ -63,5 +63,6 @@ export default {
 <style lang="css" scoped>
 .ui.mini.orange.segment {
   height: 60px;
+  border-radius: 0
 }
 </style>
