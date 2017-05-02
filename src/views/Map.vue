@@ -78,7 +78,7 @@
         </div><!--/ The soldStands menu item -->
 
         <!-- Other menu items will come down here -->
-        <a class="item" @click="fetchReservedStands">Reserved Stands</a>
+
       </div>
     </div>
 
