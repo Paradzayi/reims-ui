@@ -19,7 +19,7 @@ export default {
   data () {
     return {
       menus: [
-        'home', 'stands', 'clients', 'finances'
+        'home', 'stands', 'clients', 'finances', 'map'
       ]
     }
   },
