@@ -26,6 +26,9 @@ module.exports = {
     }
   },
   module: {
+    // the ultimate solution to the mapboxgl problem
+    noParse: /(mapbox-gl)\.js$/,
+
     rules: [
       {
         test: /\.(js|vue)$/,

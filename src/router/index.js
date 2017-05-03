@@ -14,6 +14,7 @@ import AllStands from '@/views/stands/All'
 import AvailableStands from '@/views/stands/Available'
 import ReservedStands from '@/views/stands/Reserved'
 import SoldStands from '@/views/stands/Sold'
+import Map from '@/views/Map'
 
 Vue.use(Router)
 
@@ -81,6 +82,10 @@ export default new Router({
           component: Summary
         }
       ]
+    },
+    {
+      path: '/map',
+      component: Map
     }
   ]
 })

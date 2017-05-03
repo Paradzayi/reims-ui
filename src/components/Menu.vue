@@ -1,11 +1,14 @@
 <template>
+
   <div class="ui mini orange segment">
     <div class="ui secondary small orange menu">
       <a href="#/" id="home" @click="selectMenu('home')" class="active item">Home</a>
       <a href="#/stands" id="stands" @click="selectMenu('stands')" class="item">Stands</a>
       <a href="#/clients" id="clients" @click="selectMenu('clients')" class="item">Clients</a>
       <a href="#/finances" id="finances" @click="selectMenu('finances')" class="item">Finances</a>
+      <a href="#/map" id="map" @click="selectMenu('map')" class="item">Map</a>
     </div>
+
   </div>
 </template>
 
@@ -16,7 +19,7 @@ export default {
   data () {
     return {
       menus: [
-        'home', 'stands', 'clients', 'finances'
+        'home', 'stands', 'clients', 'finances', 'map'
       ]
     }
   },
