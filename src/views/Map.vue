@@ -641,6 +641,59 @@ export default {
     isLayerInMap (value) {
       // Return true if the layer is defined in the map
       return this.map.getLayer(value) !== undefined
+
+    /*
+      Detemine which menu is selected then filter the stands to show in the list
+      Mostly used for initialisation and reset methods
+    */
+    showStandsByMenu () {
+      // find the active menu
+      let selectedStandMenu = this.menus.find(menu => {
+        return menu.active === true
+      })
+
+      // If there is no active menu it means there is no menu at all.
+      // return an empty array
+      if (!selectedStandMenu) {
+        return []
+      }
+
+      var _this = this
+
+      switch (selectedStandMenu.id) {
+        case 'reservedStands':
+          _this.standsList = []
+          dynamicallyPushStands(this.geojson.reservedStands.features)
+          break
+
+        case 'soldStands':
+          _this.standsList = []
+          dynamicallyPushStands(this.geojson.soldStands.features)
+          break
+        default:
+
+      }
+
+      function dynamicallyPushStands (features) {
+        features.forEach(feature => {
+          // Only push what is required to save memory
+          let standid = feature.properties.standid
+          let township = feature.properties.township
+          let city = feature.properties.city
+          let coordinates = feature.geometry.coordinates
+
+          _this.standsList.push({
+            standid,
+            township,
+            city,
+            coordinates
+          })
+        })
+      }
+
+      // Done! Return the list of fresh stands
+      return this.standsList
+    },
     }
   }
 }
