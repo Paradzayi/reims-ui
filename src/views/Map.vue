@@ -849,8 +849,26 @@ export default {
 </script>
 
 <style lang='css' scoped>
+  /*
+    the map!
+  */
   #mapview {
     height: 500px;
     width: 100%;
+  }
+
+  /*
+    the list showing the list of stands
+  */
+  .ui.small.stands.list {
+    max-height:300px;
+    overflow-x: auto;
+  }
+
+  /*
+    The reset button
+  */
+  .reset.button{
+    margin-left:10px;
   }
 </style>
