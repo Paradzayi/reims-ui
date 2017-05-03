@@ -586,6 +586,18 @@ export default {
             `
             return popupHTML
           }
+
+          // the menu variable to be shown in the tabular menu
+          let soldStandsMenu = {
+            id: 'soldStands',
+            title: 'Sold',
+            active: false
+          }
+
+          // register the menu only if it has not been registered
+          if (this.menus.find(menu => { return menu.id === soldStandsMenu.id }) === undefined) {
+            this.menus.push(soldStandsMenu)
+          }
         })
       .catch(err => {
         if (err) {
