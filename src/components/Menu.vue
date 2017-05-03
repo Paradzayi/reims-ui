@@ -1,7 +1,7 @@
 <template>
 
   <div class="ui mini orange segment">
-    <div class="ui secondary large orange menu">
+    <div class="ui secondary small orange menu">
       <a href="#/" id="home" @click="selectMenu('home')" class="active item">Home</a>
       <a href="#/stands" id="stands" @click="selectMenu('stands')" class="item">Stands</a>
       <a href="#/clients" id="clients" @click="selectMenu('clients')" class="item">Clients</a>
@@ -62,7 +62,7 @@ export default {
 
 <style lang="css" scoped>
 .ui.mini.orange.segment {
-  height: 60px;
+  height: 55px;
   border-radius: 0
 }
 </style>
