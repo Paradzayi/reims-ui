@@ -4,7 +4,7 @@
     <div class='five wide column'>
 
       <!-- The menu-->
-      <div class='ui vertical  orange fluid  menu'>
+      <div class='ui vertical  orange fluid mini menu'>
 
         <!-- The reservedStads menu item-->
         <div
