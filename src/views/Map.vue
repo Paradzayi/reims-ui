@@ -678,6 +678,26 @@ export default {
     },
 
     /*
+      Filter the stands to be shown in the list of stands
+    */
+    searchStand () {
+      let value = this.searchStandString
+
+      value = value.toLowerCase()
+
+      // Only start filtering if the search string is > 2 for perfomance reasons
+      // (also returns more relevant result)
+      if (this.searchStandString.length > 2) {
+        this.standsList = this.standsList.filter(stand => {
+          // filter by standid, township or city
+          return stand.standid.indexOf(value) > -1 ||
+                 stand.township.toLowerCase().indexOf(value) > -1 ||
+                 stand.city.toLowerCase().indexOf(value) > -1
+        })
+      }
+    },
+
+    /*
       Detemine which menu is selected then filter the stands to show in the list
       Mostly used for initialisation and reset methods
     */
