@@ -115,7 +115,7 @@
 
           <!-- Iterate the standsList to show them-->
           <div  v-for = "stand in standsList" class="item link">
-            <div class="ui fluid mini basic icon button" @click="flyToStand(stand)">
+            <div :class="{ui: true, fluid: true, mini: stand.standid !== selectedStandID, basic: true, icon: true, active: stand.standid === selectedStandID, button: true}" @click="flyToStand(stand)">
               <i class="send icon"></i>
               <b>{{stand.standid}} in {{stand.township}}, {{stand.city}}</b>
             </div>
@@ -207,7 +207,10 @@ export default {
       standsList: [],
 
       // The string used to filter the stands in the list
-      searchStandString: ''
+      searchStandString: '',
+
+      // The string used to filter the stands in the list
+      selectedStandID: ''
     }
   },
 
@@ -801,6 +804,9 @@ export default {
         center: polylabel(stand.coordinates[0], 1.0),
         zoom: 18
       })
+
+      // Highlight the appropiate stand button
+      _this.selectedStandID = stand.standid
 
       // find the active menu
       let selectedStandMenu = _this.menus.find(menu => {
