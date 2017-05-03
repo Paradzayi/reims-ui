@@ -726,6 +726,66 @@ export default {
       // Done! Return the list of fresh stands
       return this.standsList
     },
+
+    /*
+      Fly to the selected stand in the  and show popup
+    */
+    flyToStand (stand) {
+      var _this = this
+
+      // Use polylabel to find the centre of the stand then fly to it
+      _this.map.flyTo({
+        center: polylabel(stand.coordinates[0], 1.0),
+        zoom: 18
+      })
+
+      // find the active menu
+      let selectedStandMenu = _this.menus.find(menu => {
+        return menu.active === true
+      })
+
+      switch (selectedStandMenu.id) {
+        case 'reservedStands':
+          let feature = _this.geojson.reservedStands.features.find(feature => {
+            return feature.properties.standid === stand.standid
+          })
+
+          // Show html specific to the stand
+          let popupHTML = _this.popups.reservedStands(feature)
+
+          showStandPopupOnMap(feature, popupHTML)
+          break
+
+        case 'soldStands':
+          feature = _this.geojson.soldStands.features.find(feature => {
+            return feature.properties.standid === stand.standid
+          })
+
+          // Show html specific to the stand
+          popupHTML = _this.popups.soldStands(feature)
+
+          // Show html specific to the stand
+          showStandPopupOnMap(feature, popupHTML)
+          break
+        default:
+      }
+
+      /*
+        Set the Long and Lat for the popup.
+        Assign html to the popup
+        Then add it to the map
+      */
+      function showStandPopupOnMap (feature, popupHTML) {
+        // Using a the [0] because the coodinates in the geojson are one array
+        // above the coodinates on the map. Compare with the popup actions in
+        // in the mousemove event.
+        _this.popup.setLngLat(polylabel(feature.geometry.coordinates[0]))
+
+        // Place some data in the popup and add it to the map
+        _this.popup.setHTML(popupHTML)
+          .addTo(_this.map)
+      }
+    }
     }
   }
 }
