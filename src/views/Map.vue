@@ -157,7 +157,11 @@ export default {
 
       // Define the style of the layers so that
       // they can be used to recreate the layer during toggling
-      layerStyles: []
+      layerStyles: [],
+
+      // The tabular menus to toggle between different types of stand
+      // to show on the map
+      menus: [],
     }
   },
 
