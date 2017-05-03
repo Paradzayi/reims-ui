@@ -605,6 +605,9 @@ export default {
           if (this.menus.find(menu => { return menu.id === soldStandsMenu.id }) === undefined) {
             this.menus.push(soldStandsMenu)
           }
+
+          // Then select the menu deselecting others in the process
+          this.selectMenu(soldStandsMenu)
         })
       .catch(err => {
         if (err) {
