@@ -26,6 +26,9 @@ module.exports = {
     }
   },
   module: {
+    // the ultimate solution to the mapboxgl problem
+    noParse: /(mapbox-gl)\.js$/,
+
     rules: [
       {
         test: /\.(js|vue)$/,
@@ -63,11 +66,5 @@ module.exports = {
         }
       }
     ]
-  },
-
-  // Mapbox has bundling issues with webpack so ignore it
-  // and expect it to be loaded by the client in the script tags
-  externals: {
-       "mapbox-gl": 'mapboxgl'
-   }
+  }
 }
