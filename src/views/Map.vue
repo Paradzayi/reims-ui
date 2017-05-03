@@ -121,6 +121,12 @@
             </div>
           </div>
 
+          <!-- Show a message if there are no stands to show-->
+          <div class="item" v-if="!standsList.length">
+            <div class="ui disabled segment">
+              <h1><i class = "battery empty icon"></i>There's nothing to show here!</h1>
+            </div>
+          </div>
         </div>
       </div>
     </div>
