@@ -842,6 +842,19 @@ export default {
           .addTo(_this.map)
       }
     }
+  },
+
+  /*
+    Variables registered in the data() that should trigger certain actions
+    should they change their value. REACTIVITY!
+  */
+  watch: {
+
+    /*
+      Refresh the stands list and show the appropriate stands depending on the selected menu
+    */
+    menus () {
+      this.showStandsByMenu()
     }
   }
 }
