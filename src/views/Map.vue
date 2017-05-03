@@ -166,6 +166,9 @@ export default {
       // The list of stands to show in the list so that the user can
       // zoom to the stand
       standsList: [],
+
+      // The string used to filter the stands in the list
+      searchStandString: ''
     }
   },
 
