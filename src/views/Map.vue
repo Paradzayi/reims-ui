@@ -93,7 +93,7 @@
 
       <!--Show categorised stands down here (only if there a stands to be zoomed to)
           so that user can zoom to them in the map -->
-      <div v-if = "standsList.length" class="ui orange segment">
+      <div v-if = "menus.length" class="ui orange segment">
 
         <!-- The togglable headers of the stands displayed as tabular menus -->
         <div class="ui small tabular menu">
