@@ -494,6 +494,9 @@ export default {
           if (this.menus.find(menu => { return menu.id === reservedStandsMenu.id }) === undefined) {
             this.menus.push(reservedStandsMenu)
           }
+
+          // Then select the menu deselecting others in the process
+          this.selectMenu(reservedStandsMenu)
         })
       .catch(err => {
         if (err) {
