@@ -90,6 +90,39 @@
         <!-- Other menu items will come down here -->
 
       </div>
+
+      <!--Show categorised stands down here (only if there a stands to be zoomed to)
+          so that user can zoom to them in the map -->
+      <div v-if = "standsList.length" class="ui orange segment">
+
+        <!-- The togglable headers of the stands displayed as tabular menus -->
+        <div class="ui small tabular menu">
+          <a v-for = "menu in menus" :class="{active: menu.active, item: true}" @click="selectMenu(menu)">{{menu.title}}</a>
+        </div>
+
+        <!-- Search for the stand -->
+        <div class="ui fluid mini left icon search input">
+          <i class="search icon"></i>
+          <input v-model:value="searchStandString" placeholder="Filter using stand ID, township or city" @keyup.enter="searchStand">
+          <button v-if="searchStandString" @click="searchStandString = ''" class="ui mini circular red icon reset button"><i class="remove icon"></i></button>
+        </div>
+
+        <!-- Divide the search input and the stands -->
+        <div class="ui divider"></div>
+
+        <!-- Show stands to be zoomed to here-->
+        <div class="ui small stands list">
+
+          <!-- Iterate the standsList to show them-->
+          <div  v-for = "stand in standsList" class="item link">
+            <div class="ui fluid mini basic icon button" @click="flyToStand(stand)">
+              <i class="send icon"></i>
+              <b>{{stand.standid}} in {{stand.township}}, {{stand.city}}</b>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
 
     <!-- The map stuff here -->
