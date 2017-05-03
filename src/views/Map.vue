@@ -664,6 +664,7 @@ export default {
       if (this.map.getLayer(value)) {
         // Remove the layer from the map
         this.map.removeLayer(value)
+        this.popup.remove()
 
         // Register the layer
         this.layers.splice(this.layers.indexOf('reservedStands'), 1)
