@@ -641,6 +641,32 @@ export default {
     isLayerInMap (value) {
       // Return true if the layer is defined in the map
       return this.map.getLayer(value) !== undefined
+    },
+
+    /*
+      Set the currently selected menu to be active while deactivating other menus
+    */
+    selectMenu (selectedMenu) {
+      // find out if there are other menus
+      let otherMenus = this.menus.filter(menu => {
+        return selectedMenu.id !== menu.id
+      })
+
+      // deactivate other menus if they exist
+      if (otherMenus.length > 0) {
+        otherMenus.map(menu => {
+          menu.active = false
+        })
+      }
+
+      // then activate the selected menu
+      this.menus.find(menu => {
+        return selectedMenu.id === menu.id
+      }).active = true
+
+      // Refresh the stands list and show the appropriate stands depending on the selected menu
+      this.showStandsByMenu()
+    },
 
     /*
       Detemine which menu is selected then filter the stands to show in the list
