@@ -3,11 +3,6 @@
     <!-- The menu and any stuff on the left hand side -->
     <div class='five wide column'>
 
-      <!-- Label showing users where to click-->
-      <div class="ui fluid centered orange pointing below basic label">
-        <p>Select any thing you want to see on the map</p>
-      </div>
-
       <!-- The menu-->
       <div class='ui vertical  orange fluid  menu'>
 
