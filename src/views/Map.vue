@@ -162,6 +162,10 @@ export default {
       // The tabular menus to toggle between different types of stand
       // to show on the map
       menus: [],
+
+      // The list of stands to show in the list so that the user can
+      // zoom to the stand
+      standsList: [],
     }
   },
 
