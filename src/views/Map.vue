@@ -855,6 +855,16 @@ export default {
     */
     menus () {
       this.showStandsByMenu()
+    },
+
+    /*
+      If the searchStandString is empty, refresh the stands list and show the
+      appropriate stands depending on the selected menu
+    */
+    searchStandString () {
+      if (this.searchStandString === '') {
+        this.showStandsByMenu()
+      }
     }
   }
 }
