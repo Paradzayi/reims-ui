@@ -34,7 +34,7 @@
           <div
             v-if = "geojson.reservedStands.features">
             <p>
-              <div class="ui toggle checkbox">
+              <div class="ui slider checkbox">
                 <input
                   type="checkbox"
                   :checked="isLayerInMap('reservedStands')"
@@ -75,7 +75,7 @@
           <div
             v-if = "geojson.soldStands.features">
             <p>
-              <div class="ui toggle checkbox">
+              <div class="ui slider checkbox">
                 <input
                   type="checkbox"
                   :checked="isLayerInMap('soldStands')"
