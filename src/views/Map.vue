@@ -188,6 +188,7 @@ export default {
 
       // The registration location of the individual popup html
       popups: {
+        allStands: function () {},
         reservedStands: function () {},
         soldStands: function () {}
       },
