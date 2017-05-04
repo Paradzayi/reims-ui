@@ -367,6 +367,12 @@ export default {
           // Store the response for later use
           this.geojson.allStands = response.data.data[0]
 
+          // first check if there are any features in the geojson
+          if (!!this.geojson.allStands.features === false) {
+            // Exit the function if there aren't
+            return
+          }
+
           // only add the source if the source has not been added before
           if (!this.map.getSource('stands')) {
             // add source
@@ -381,17 +387,78 @@ export default {
             this.map.removeLayer('stands')
           }
 
-          // Add stands layer
-          this.map.addLayer({
-            'id': 'stands',
+          // Define the allStandsStyle
+          let allStandsStyle = {
+            'id': 'allStands',
             'type': 'fill',
             'source': 'stands',
             'paint': {
-              'fill-color': 'white',
+              'fill-color': 'brown',
               'fill-opacity': 0.7,
-              'fill-outline-color': 'sienna'
+              'fill-outline-color': 'white'
             }
-          })
+          }
+
+          // Add stands layer
+          this.map.addLayer(allStandsStyle)
+
+          // Then register the layer with the component's data
+          this.layers.push('allStands')
+
+          // Then register the style  with the component's data
+          this.layerStyles.push(allStandsStyle)
+
+          this.popups.allStands = function (feature) {
+            let stand = feature.properties
+
+            let popupHTML = `
+            <div clas = "ui list">
+              <div class = "item">
+                <h3 class = "ui header">Stand <div class="ui horizontal orange label"> ${stand.standid} </div></h3>
+                <div class="ui divider">
+              </div>
+
+              <div class="item">
+                <div class="content">
+                  <strong class="header">
+                    Township
+                  </strong>
+                  <div class="description">
+                    ${stand.township}
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="content">
+                  <strong class="header">
+                    City
+                  </Strong>
+                  <div class="description">
+                    ${stand.city}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            `
+            return popupHTML
+          }
+
+          // the menu variable to be shown in the tabular menu
+          let allStandsMenu = {
+            id: 'allStands',
+            title: 'All',
+            active: true
+          }
+
+          // register the menu only if it has not been registered
+          if (this.menus.find(menu => { return menu.id === allStandsMenu.id }) === undefined) {
+            this.menus.push(allStandsMenu)
+          }
+
+          // Then select the menu deselecting others in the process
+          this.selectMenu(allStandsMenu)
         })
         .catch(err => {
           if (err) {
