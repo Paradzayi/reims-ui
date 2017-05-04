@@ -149,6 +149,7 @@ import axios from 'axios'
 import config from '@/modules/config'
 import polylabel from 'polylabel'
 let ApiConfig = config.api
+import moment from 'moment'
 
 export default {
   /*
@@ -505,19 +506,19 @@ export default {
 
               <div class = "item">
                 <div class = "content">
-                  <strong class="header">Reserved on</strong>
+                  <strong class="header">Reserved</strong>
                   <div class = "description">
-                    ${stand.reservationdate}
+                    ${_this.humaniseDate(stand.reservationdate)}
                   </div>
                 </div>
               </div>
 
               <div class = "item">
                 <div class = "content">
-                  <strong class="header">Expiring on</strong>
+                  <strong class="header">Expiring</strong>
                   <div class = "description">
                     <div class = "ui warning message">
-                      ${stand.expirydate}
+                      ${_this.humaniseDate(stand.expirydate)}
                     </div>
                   </div>
                 </div>
@@ -854,6 +855,15 @@ export default {
         _this.popup.setHTML(popupHTML)
           .addTo(_this.map)
       }
+    },
+
+    /*
+      Change the dates in ISO_8601 format into more human readable format
+      relative to today's date.
+      e.g  2017-05-11T00:00:00 ==> 2 days ago
+    */
+    humaniseDate (date) {
+      return moment().to(moment(date, moment.ISO_8601))
     }
   },
 
