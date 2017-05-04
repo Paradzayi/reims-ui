@@ -840,6 +840,11 @@ export default {
           _this.standsList = []
           dynamicallyPushStands(this.geojson.soldStands.features)
           break
+
+        case 'allStands':
+          _this.standsList = []
+          dynamicallyPushStands(this.geojson.allStands.features)
+          break
         default:
 
       }
