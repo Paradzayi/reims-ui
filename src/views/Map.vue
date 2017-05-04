@@ -164,7 +164,7 @@ export default {
       geojson: {
         cities: {},
         cadastre: {},
-        stands: {},
+        allStands: {},
         reservedStands: {},
         soldStands: {}
       },
@@ -357,7 +357,7 @@ export default {
     /*
       fetch data for the stands and store it in the data() function
     */
-    fetchStandsData () {
+    fetchAllStands () {
       // fix for calling this component inside functions where this will be undifined
       var _this = this
 
@@ -365,14 +365,14 @@ export default {
       axios.get(ApiConfig.baseUrl + '/api/stands?map=true')
         .then(response => {
           // Store the response for later use
-          this.geojson.stands = response.data.data[0]
+          this.geojson.allStands = response.data.data[0]
 
           // only add the source if the source has not been added before
           if (!this.map.getSource('stands')) {
             // add source
             this.map.addSource('stands', {
               type: 'geojson',
-              'data': _this.geojson.stands
+              'data': _this.geojson.allStands
             })
           }
 
