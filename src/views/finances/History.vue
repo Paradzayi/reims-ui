@@ -19,7 +19,7 @@
         </div>
         <div class="content">
           <div class="summary">
-            <router-link :to="{ path: `/clients/${history.clientid}` }">{{history.firstname}} {{history.surname}}</router-link> paid ${{history.amount}} using cash for stand <router-link :to="{ path: `/stands/${history.standid}`}">{{history.standid}}</router-link> in {{history.township_name}}, {{history.city_name}}. Receipt number is <span class="ui mini orange label">{{history.receiptnum}}</span>
+            <router-link :to="{ path: `/clients/${history.clientid}` }">{{history.firstname}} {{history.surname}}</router-link> paid ${{history.amount}} using cash for stand <router-link :to="{ path: `/stands/${history.standid}`}">{{history.standid}}</router-link> in {{history.township}}, {{history.city}}. Receipt number is <span class="ui mini orange label">{{history.receiptnum}}</span>
           </div>
           <div class="meta">
             <a :href="`mailto:${history.email}`"><i class="envelope icon"></i> Send Email</a>

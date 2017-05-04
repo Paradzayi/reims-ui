@@ -37,3 +37,6 @@
 <style src="@/assets/vendor/semantic-ui/semantic-ui.min.css">
 
 </style>
+
+<!-- Custom css from my app-->
+<style src="@/assets/stylesheets/main.css"></style>
