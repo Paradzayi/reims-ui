@@ -908,6 +908,18 @@ export default {
           // Show html specific to the stand
           showStandPopupOnMap(feature, popupHTML)
           break
+
+        case 'allStands':
+          feature = _this.geojson.allStands.features.find(feature => {
+            return feature.properties.standid === stand.standid
+          })
+
+          // Show html specific to the stand
+          popupHTML = _this.popups.allStands(feature)
+
+          // Show html specific to the stand
+          showStandPopupOnMap(feature, popupHTML)
+          break
         default:
       }
 
