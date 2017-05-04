@@ -298,6 +298,9 @@ export default {
             case 'soldStands':
               popupHTML = this.popups.soldStands(feature)
               break
+            case 'allStands':
+              popupHTML = this.popups.allStands(feature)
+              break
           }
 
           // Place some data in the popup and add it to the map
