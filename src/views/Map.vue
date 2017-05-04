@@ -5,6 +5,49 @@
 
       <!-- The menu-->
       <div class='ui vertical  orange fluid mini menu'>
+        <div class="ui top attached orange segment">
+          <h5>Select to show in map</h5>
+        </div>
+
+        <!-- The reservedStads menu item-->
+        <div
+          :class="{active: geojson.allStands.features, item: true, link: true}">
+
+          <!-- Fetch reserved items when you click here -->
+          <a
+            @click="fetchAllStands">
+            All Stands
+          </a>
+
+          <!-- show the user a red zero if there are no reserved items -->
+          <div
+            class="ui red basic label"
+            v-if = "geojson.allStands.type && !!geojson.allStands.features === false">
+            0
+          </div>
+
+          <!-- show the user the number of reserved items -->
+          <div
+            class="ui brown basic label"
+            v-if = "geojson.allStands.features">
+            {{ geojson.allStands.features.length }}
+          </div>
+
+          <!-- Allow the user to toggle the layers if they are present -->
+          <div
+            v-if = "geojson.allStands.features">
+            <p>
+              <div class="ui slider checkbox">
+                <input
+                  type="checkbox"
+                  :checked="isLayerInMap('allStands')"
+                  @click="toggleLayer('allStands')">
+                <label>Show in map</label>
+              </div>
+            </p>
+          </div>
+
+        </div><!--/ The reservedStands menu item -->
 
         <!-- The reservedStads menu item-->
         <div
