@@ -5,6 +5,49 @@
 
       <!-- The menu-->
       <div class='ui vertical  orange fluid mini menu'>
+        <div class="ui top attached orange segment">
+          <h5>Select to show in map</h5>
+        </div>
+
+        <!-- The reservedStads menu item-->
+        <div
+          :class="{active: geojson.allStands.features, item: true, link: true}">
+
+          <!-- Fetch reserved items when you click here -->
+          <a
+            @click="fetchAllStands">
+            All Stands
+          </a>
+
+          <!-- show the user a red zero if there are no reserved items -->
+          <div
+            class="ui red basic label"
+            v-if = "geojson.allStands.type && !!geojson.allStands.features === false">
+            0
+          </div>
+
+          <!-- show the user the number of reserved items -->
+          <div
+            class="ui brown basic label"
+            v-if = "geojson.allStands.features">
+            {{ geojson.allStands.features.length }}
+          </div>
+
+          <!-- Allow the user to toggle the layers if they are present -->
+          <div
+            v-if = "geojson.allStands.features">
+            <p>
+              <div class="ui slider checkbox">
+                <input
+                  type="checkbox"
+                  :checked="isLayerInMap('allStands')"
+                  @click="toggleLayer('allStands')">
+                <label>Show in map</label>
+              </div>
+            </p>
+          </div>
+
+        </div><!--/ The reservedStands menu item -->
 
         <!-- The reservedStads menu item-->
         <div
@@ -164,7 +207,7 @@ export default {
       geojson: {
         cities: {},
         cadastre: {},
-        stands: {},
+        allStands: {},
         reservedStands: {},
         soldStands: {}
       },
@@ -188,6 +231,7 @@ export default {
 
       // The registration location of the individual popup html
       popups: {
+        allStands: function () {},
         reservedStands: function () {},
         soldStands: function () {}
       },
@@ -297,6 +341,9 @@ export default {
             case 'soldStands':
               popupHTML = this.popups.soldStands(feature)
               break
+            case 'allStands':
+              popupHTML = this.popups.allStands(feature)
+              break
           }
 
           // Place some data in the popup and add it to the map
@@ -357,7 +404,7 @@ export default {
     /*
       fetch data for the stands and store it in the data() function
     */
-    fetchStandsData () {
+    fetchAllStands () {
       // fix for calling this component inside functions where this will be undifined
       var _this = this
 
@@ -365,14 +412,20 @@ export default {
       axios.get(ApiConfig.baseUrl + '/api/stands?map=true')
         .then(response => {
           // Store the response for later use
-          this.geojson.stands = response.data.data[0]
+          this.geojson.allStands = response.data.data[0]
+
+          // first check if there are any features in the geojson
+          if (!!this.geojson.allStands.features === false) {
+            // Exit the function if there aren't
+            return
+          }
 
           // only add the source if the source has not been added before
           if (!this.map.getSource('stands')) {
             // add source
             this.map.addSource('stands', {
               type: 'geojson',
-              'data': _this.geojson.stands
+              'data': _this.geojson.allStands
             })
           }
 
@@ -381,17 +434,78 @@ export default {
             this.map.removeLayer('stands')
           }
 
-          // Add stands layer
-          this.map.addLayer({
-            'id': 'stands',
+          // Define the allStandsStyle
+          let allStandsStyle = {
+            'id': 'allStands',
             'type': 'fill',
             'source': 'stands',
             'paint': {
-              'fill-color': 'white',
+              'fill-color': 'brown',
               'fill-opacity': 0.7,
-              'fill-outline-color': 'sienna'
+              'fill-outline-color': 'white'
             }
-          })
+          }
+
+          // Add stands layer
+          this.map.addLayer(allStandsStyle)
+
+          // Then register the layer with the component's data
+          this.layers.push('allStands')
+
+          // Then register the style  with the component's data
+          this.layerStyles.push(allStandsStyle)
+
+          this.popups.allStands = function (feature) {
+            let stand = feature.properties
+
+            let popupHTML = `
+            <div clas = "ui list">
+              <div class = "item">
+                <h3 class = "ui header">Stand <div class="ui horizontal orange label"> ${stand.standid} </div></h3>
+                <div class="ui divider">
+              </div>
+
+              <div class="item">
+                <div class="content">
+                  <strong class="header">
+                    Township
+                  </strong>
+                  <div class="description">
+                    ${stand.township}
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="content">
+                  <strong class="header">
+                    City
+                  </Strong>
+                  <div class="description">
+                    ${stand.city}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            `
+            return popupHTML
+          }
+
+          // the menu variable to be shown in the tabular menu
+          let allStandsMenu = {
+            id: 'allStands',
+            title: 'All',
+            active: true
+          }
+
+          // register the menu only if it has not been registered
+          if (this.menus.find(menu => { return menu.id === allStandsMenu.id }) === undefined) {
+            this.menus.push(allStandsMenu)
+          }
+
+          // Then select the menu deselecting others in the process
+          this.selectMenu(allStandsMenu)
         })
         .catch(err => {
           if (err) {
@@ -449,9 +563,9 @@ export default {
           }
 
           // only add the source if the source has not been added before
-          if (!this.map.getSource('stands')) {
+          if (!this.map.getSource('resevedStands')) {
             // add source
-            this.map.addSource('stands', {
+            this.map.addSource('reservedStands', {
               type: 'geojson',
               'data': _this.geojson.reservedStands
             })
@@ -466,7 +580,7 @@ export default {
           let reservedStandsStyle = {
             'id': 'reservedStands',
             'type': 'fill',
-            'source': 'stands',
+            'source': 'reservedStands',
             'paint': {
               'fill-color': 'orange',
               'fill-opacity': 0.7,
@@ -769,6 +883,11 @@ export default {
           _this.standsList = []
           dynamicallyPushStands(this.geojson.soldStands.features)
           break
+
+        case 'allStands':
+          _this.standsList = []
+          dynamicallyPushStands(this.geojson.allStands.features)
+          break
         default:
 
       }
@@ -833,6 +952,18 @@ export default {
 
           // Show html specific to the stand
           popupHTML = _this.popups.soldStands(feature)
+
+          // Show html specific to the stand
+          showStandPopupOnMap(feature, popupHTML)
+          break
+
+        case 'allStands':
+          feature = _this.geojson.allStands.features.find(feature => {
+            return feature.properties.standid === stand.standid
+          })
+
+          // Show html specific to the stand
+          popupHTML = _this.popups.allStands(feature)
 
           // Show html specific to the stand
           showStandPopupOnMap(feature, popupHTML)
