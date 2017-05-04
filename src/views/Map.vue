@@ -516,9 +516,9 @@ export default {
           }
 
           // only add the source if the source has not been added before
-          if (!this.map.getSource('stands')) {
+          if (!this.map.getSource('resevedStands')) {
             // add source
-            this.map.addSource('stands', {
+            this.map.addSource('reservedStands', {
               type: 'geojson',
               'data': _this.geojson.reservedStands
             })
@@ -533,7 +533,7 @@ export default {
           let reservedStandsStyle = {
             'id': 'reservedStands',
             'type': 'fill',
-            'source': 'stands',
+            'source': 'reservedStands',
             'paint': {
               'fill-color': 'orange',
               'fill-opacity': 0.7,
