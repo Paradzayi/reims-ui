@@ -3,6 +3,11 @@
     <!-- The menu and any stuff on the left hand side -->
     <div class='five wide column'>
 
+      <!-- Show loading when the loading variable is true -->
+      <div class="ui orange fluid segment" v-if="loading === true">
+          <div class="ui mini loading basic segment"> </div>
+      </div>
+
       <!-- The menu-->
       <div class='ui vertical  orange fluid mini menu'>
         <div class="ui top attached orange segment">
@@ -255,7 +260,10 @@ export default {
       searchStandString: '',
 
       // The string used to filter the stands in the list
-      selectedStandID: ''
+      selectedStandID: '',
+
+      // True if there is need to show progress
+      loading: false
     }
   },
 
