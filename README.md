@@ -1,6 +1,6 @@
-# transcriptus-ui
+# reims-ui
 
-> The official  front end to the tranctriptus api
+> The official  front end to the reims api
 
 ## Build Setup
 
