@@ -3,6 +3,11 @@
     <!-- The menu and any stuff on the left hand side -->
     <div class='five wide column'>
 
+      <!-- Show loading when the loading variable is true -->
+      <div class="ui orange fluid segment" v-if="loading === true">
+          <div class="ui mini loading basic segment"> </div>
+      </div>
+
       <!-- The menu-->
       <div class='ui vertical  orange fluid mini menu'>
         <div class="ui top attached orange segment">
@@ -255,7 +260,10 @@ export default {
       searchStandString: '',
 
       // The string used to filter the stands in the list
-      selectedStandID: ''
+      selectedStandID: '',
+
+      // True if there is need to show progress
+      loading: false
     }
   },
 
@@ -264,6 +272,9 @@ export default {
     and ready to be used.
   */
   mounted () {
+    // Show the loading progress
+    this.showLoading(true)
+
     // Initilise the map and fetch the cadastre and stands (static parts of the map)
     this.initMap()
     this.fetchBaseItems()
@@ -398,6 +409,9 @@ export default {
         })
         // Add the Naviagtion control that allows one to pan and zoom the map
         this.map.addControl(new mapboxgl.NavigationControl())
+
+        // Disable the loading progress
+        this.showLoading(false)
       })
     },
 
@@ -408,6 +422,9 @@ export default {
       // fix for calling this component inside functions where this will be undifined
       var _this = this
 
+      // Show the loading progress
+      this.showLoading(true)
+
       // fetch the geojson from server
       axios.get(ApiConfig.baseUrl + '/api/stands?map=true')
         .then(response => {
@@ -417,6 +434,7 @@ export default {
           // first check if there are any features in the geojson
           if (!!this.geojson.allStands.features === false) {
             // Exit the function if there aren't
+            this.showLoading(false)
             return
           }
 
@@ -506,10 +524,16 @@ export default {
 
           // Then select the menu deselecting others in the process
           this.selectMenu(allStandsMenu)
+
+          // Disable the loading progress
+          this.showLoading(false)
         })
         .catch(err => {
           if (err) {
             console.log(err)
+
+            // Disable the loading progress
+            this.showLoading(false)
           }
         })
     },
@@ -550,6 +574,9 @@ export default {
       // fix for calling this component inside functions where this will be undifined
       var _this = this
 
+      // Show the loading progress
+      this.showLoading(true)
+
       // fetch the geojson from server
       axios.get(ApiConfig.baseUrl + '/api/stands/reservations?map=true')
         .then(response => {
@@ -559,6 +586,7 @@ export default {
           // first check if there are any features in the geojson
           if (!!this.geojson.reservedStands.features === false) {
             // Exit the function if there aren't
+            this.showLoading(false)
             return
           }
 
@@ -657,10 +685,16 @@ export default {
 
           // Then select the menu deselecting others in the process
           this.selectMenu(reservedStandsMenu)
+
+          // Disable the loading progress
+          this.showLoading(false)
         })
       .catch(err => {
         if (err) {
           console.log(err)
+
+          // Disable the loading progress
+          this.showLoading(false)
         }
       })
     },
@@ -672,6 +706,9 @@ export default {
       // fix for calling this component inside functions where this will be undifined
       var _this = this
 
+      // Show the loading progress
+      this.showLoading(true)
+
       // fetch the geojson from server
       axios.get(ApiConfig.baseUrl + '/api/stands/sold?map=true')
         .then(response => {
@@ -681,6 +718,7 @@ export default {
           // first check if there are any features in the geojson
           if (!!this.geojson.soldStands.features === false) {
             // Exit the function if there aren't
+            this.showLoading(false)
             return
           }
 
@@ -768,10 +806,16 @@ export default {
 
           // Then select the menu deselecting others in the process
           this.selectMenu(soldStandsMenu)
+
+          // Disable the loading progress
+          this.showLoading(false)
         })
       .catch(err => {
         if (err) {
           console.log(err)
+
+          // Disable the loading progress
+          this.showLoading(false)
         }
       })
     },
@@ -995,6 +1039,10 @@ export default {
     */
     humaniseDate (date) {
       return moment().to(moment(date, moment.ISO_8601))
+    },
+
+    showLoading (value) {
+      this.loading = !!value || false
     }
   },
 
