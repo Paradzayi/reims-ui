@@ -1003,6 +1003,10 @@ export default {
     */
     humaniseDate (date) {
       return moment().to(moment(date, moment.ISO_8601))
+    },
+
+    showLoading (value) {
+      this.loading = !!value || false
     }
   },
 
