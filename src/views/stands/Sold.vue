@@ -33,8 +33,8 @@
             <td>
               <a @click="selectStand(stand)"><i class="home icon"></i> {{stand.standid}}</a>
             </td>
-            <td>{{stand.township_name}}</td>
-            <td>{{stand.city_name}}</td>
+            <td>{{stand.township}}</td>
+            <td>{{stand.city}}</td>
             <td>
               <router-link :to="{path: `/clients/${stand.clientid}`}">
                <i class="user outline icon"></i>
