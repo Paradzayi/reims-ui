@@ -11,7 +11,13 @@
       <!-- The menu-->
       <div class='ui vertical  orange fluid mini menu'>
         <div class="ui top attached orange segment">
-          <h5>Select to show in map</h5>
+          <button class="ui right floated mini red icon button">
+            <i class="remove icon"></i>
+            Clear All
+          </button>
+          <div class="header">
+            Select to show in map
+          </div>
         </div>
 
         <!-- The reservedStads menu item-->
