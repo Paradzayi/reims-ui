@@ -11,7 +11,7 @@
       <!-- The menu-->
       <div class='ui vertical  orange fluid mini menu'>
         <div class="ui top attached orange segment">
-          <button class="ui right floated mini red icon button">
+          <button class="ui right floated mini red icon button" @click="clearAllFeatures">
             <i class="remove icon"></i>
             Clear All
           </button>
@@ -1220,6 +1220,33 @@ export default {
 
     showLoading (value) {
       this.loading = !!value || false
+    },
+
+    /*
+      Reset the state of the map view to that in which it was when
+      the view was first loaded.
+    */
+    clearAllFeatures () {
+      // Loop through the geojsons and clear them all
+      for (let key in this.geojson) {
+        // exempt the city and cadastre
+        if (key !== 'cities' || key !== 'cadastre') {
+          // clear the features
+          this.geojson[key] = {}
+        }
+      }
+
+      // remove the Layers and coresponding Sources
+      this.layers.forEach(layer => {
+        this.map.removeLayer(layer)
+        this.map.removeSource(layer)
+      })
+
+      // then clear everything else
+      this.menus = []
+      this.standsList = []
+      this.layers = []
+      this.popup.remove()
     }
   },
 
