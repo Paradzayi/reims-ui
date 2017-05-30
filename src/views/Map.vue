@@ -387,23 +387,11 @@ export default {
           // Align the popup to the point where the mouse is pointing
           this.popup.setLngLat(polylabel(feature.geometry.coordinates))
 
-          // The variable to hold the dynamic popup html for the individual feature types
-          var popupHTML
-
           // Show the appropriate popup when hovering a feature
           // Differentiate using the layer.id because it is guaranteed
           // To be unique for all use cases
-          switch (feature.layer.id) {
-            case 'reservedStands':
-              popupHTML = this.popups.reservedStands(feature)
-              break
-            case 'soldStands':
-              popupHTML = this.popups.soldStands(feature)
-              break
-            case 'allStands':
-              popupHTML = this.popups.allStands(feature)
-              break
-          }
+
+          let popupHTML = this.popups[feature.layer.id](feature)
 
           // Place some data in the popup and add it to the map
           this.popup.setHTML(popupHTML)
