@@ -515,7 +515,11 @@ export default {
             let popupHTML = `
             <div clas = "ui list">
               <div class = "item">
-                <h3 class = "ui header">Stand <div class="ui horizontal orange label"> ${stand.standid} </div></h3>
+                <div class = "ui basic brown inverted segment">ALL STANDS</div>
+              </div>
+              <br>
+              <div class = "item">
+                <h3 class = "ui header">Stand <div class="ui horizontal brown label"> ${stand.standid} </div></h3>
                 <div class="ui divider">
               </div>
 
@@ -639,7 +643,11 @@ export default {
             let popupHTML = `
             <div clas = "ui list">
               <div class = "item">
-                <h3 class = "ui header">Stand <div class="ui horizontal orange label"> ${stand.standid} </div></h3>
+                <div class = "ui basic purple inverted segment">AVAILABLE</div>
+              </div>
+              <br>
+              <div class = "item">
+                <h3 class = "ui header">Stand <div class="ui horizontal purple label"> ${stand.standid} </div></h3>
                 <div class="ui divider">
               </div>
 
@@ -791,6 +799,10 @@ export default {
             let popupHTML = `
             <div clas = "ui list">
               <div class = "item">
+                <div class = "ui basic orange inverted segment">RESERVED</div>
+              </div>
+              <br>
+              <div class = "item">
                 <h3 class = "ui header">Stand <div class="ui horizontal orange label"> ${stand.standid} </div></h3>
 
                 <div class = "ui divider"></div>
@@ -923,7 +935,11 @@ export default {
             let popupHTML = `
             <div clas = "ui list">
               <div class = "item">
-                <h3 class = "ui green header">Stand <div class="ui horizontal orange label"> ${stand.standid} </div></h3>
+                <div class = "ui basic green inverted segment">SOLD</div>
+              </div>
+              <br>
+              <div class = "item">
+                <h3 class = "ui header">Stand <div class="ui horizontal green label"> ${stand.standid} </div></h3>
 
                 <div class = "ui divider"></div>
 
