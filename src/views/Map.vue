@@ -599,24 +599,24 @@ export default {
           }
 
           // only add the source if the source has not been added before
-          if (!this.map.getSource('stands')) {
+          if (!this.map.getSource('availableStands')) {
             // add source
-            this.map.addSource('stands', {
+            this.map.addSource('availableStands', {
               type: 'geojson',
               'data': _this.geojson.availableStands
             })
           }
 
           // Destroy any layer for stands and add a new one
-          if (this.map.getLayer('stands')) {
-            this.map.removeLayer('stands')
+          if (this.map.getLayer('availableStands')) {
+            this.map.removeLayer('availableStands')
           }
 
           // Define the availableStandsStyle
           let availableStandsStyle = {
             'id': 'availableStands',
             'type': 'fill',
-            'source': 'stands',
+            'source': 'availableStands',
             'paint': {
               'fill-color': 'purple',
               'fill-opacity': 0.7,
