@@ -11,7 +11,7 @@
       <!-- The menu-->
       <div class='ui vertical  orange fluid mini menu'>
         <div class="ui top attached orange segment">
-          <button class="ui right floated mini red icon button">
+          <button class="ui right floated mini red icon button" @click="clearAllFeatures">
             <i class="remove icon"></i>
             Clear All
           </button>
@@ -387,23 +387,11 @@ export default {
           // Align the popup to the point where the mouse is pointing
           this.popup.setLngLat(polylabel(feature.geometry.coordinates))
 
-          // The variable to hold the dynamic popup html for the individual feature types
-          var popupHTML
-
           // Show the appropriate popup when hovering a feature
           // Differentiate using the layer.id because it is guaranteed
           // To be unique for all use cases
-          switch (feature.layer.id) {
-            case 'reservedStands':
-              popupHTML = this.popups.reservedStands(feature)
-              break
-            case 'soldStands':
-              popupHTML = this.popups.soldStands(feature)
-              break
-            case 'allStands':
-              popupHTML = this.popups.allStands(feature)
-              break
-          }
+
+          let popupHTML = this.popups[feature.layer.id](feature)
 
           // Place some data in the popup and add it to the map
           this.popup.setHTML(popupHTML)
@@ -487,24 +475,24 @@ export default {
           }
 
           // only add the source if the source has not been added before
-          if (!this.map.getSource('stands')) {
+          if (!this.map.getSource('allStands')) {
             // add source
-            this.map.addSource('stands', {
+            this.map.addSource('allStands', {
               type: 'geojson',
               'data': _this.geojson.allStands
             })
           }
 
           // Destroy any layer for stands and add a new one
-          if (this.map.getLayer('stands')) {
-            this.map.removeLayer('stands')
+          if (this.map.getLayer('allStands')) {
+            this.map.removeLayer('allStands')
           }
 
           // Define the allStandsStyle
           let allStandsStyle = {
             'id': 'allStands',
             'type': 'fill',
-            'source': 'stands',
+            'source': 'allStands',
             'paint': {
               'fill-color': 'brown',
               'fill-opacity': 0.7,
@@ -527,7 +515,11 @@ export default {
             let popupHTML = `
             <div clas = "ui list">
               <div class = "item">
-                <h3 class = "ui header">Stand <div class="ui horizontal orange label"> ${stand.standid} </div></h3>
+                <div class = "ui basic brown inverted segment">ALL STANDS</div>
+              </div>
+              <br>
+              <div class = "item">
+                <h3 class = "ui header">Stand <div class="ui horizontal brown label"> ${stand.standid} </div></h3>
                 <div class="ui divider">
               </div>
 
@@ -611,24 +603,24 @@ export default {
           }
 
           // only add the source if the source has not been added before
-          if (!this.map.getSource('stands')) {
+          if (!this.map.getSource('availableStands')) {
             // add source
-            this.map.addSource('stands', {
+            this.map.addSource('availableStands', {
               type: 'geojson',
               'data': _this.geojson.availableStands
             })
           }
 
           // Destroy any layer for stands and add a new one
-          if (this.map.getLayer('stands')) {
-            this.map.removeLayer('stands')
+          if (this.map.getLayer('availableStands')) {
+            this.map.removeLayer('availableStands')
           }
 
           // Define the availableStandsStyle
           let availableStandsStyle = {
             'id': 'availableStands',
             'type': 'fill',
-            'source': 'stands',
+            'source': 'availableStands',
             'paint': {
               'fill-color': 'purple',
               'fill-opacity': 0.7,
@@ -651,7 +643,11 @@ export default {
             let popupHTML = `
             <div clas = "ui list">
               <div class = "item">
-                <h3 class = "ui header">Stand <div class="ui horizontal orange label"> ${stand.standid} </div></h3>
+                <div class = "ui basic purple inverted segment">AVAILABLE</div>
+              </div>
+              <br>
+              <div class = "item">
+                <h3 class = "ui header">Stand <div class="ui horizontal purple label"> ${stand.standid} </div></h3>
                 <div class="ui divider">
               </div>
 
@@ -803,6 +799,10 @@ export default {
             let popupHTML = `
             <div clas = "ui list">
               <div class = "item">
+                <div class = "ui basic orange inverted segment">RESERVED</div>
+              </div>
+              <br>
+              <div class = "item">
                 <h3 class = "ui header">Stand <div class="ui horizontal orange label"> ${stand.standid} </div></h3>
 
                 <div class = "ui divider"></div>
@@ -935,7 +935,11 @@ export default {
             let popupHTML = `
             <div clas = "ui list">
               <div class = "item">
-                <h3 class = "ui green header">Stand <div class="ui horizontal orange label"> ${stand.standid} </div></h3>
+                <div class = "ui basic green inverted segment">SOLD</div>
+              </div>
+              <br>
+              <div class = "item">
+                <h3 class = "ui header">Stand <div class="ui horizontal green label"> ${stand.standid} </div></h3>
 
                 <div class = "ui divider"></div>
 
@@ -1232,6 +1236,33 @@ export default {
 
     showLoading (value) {
       this.loading = !!value || false
+    },
+
+    /*
+      Reset the state of the map view to that in which it was when
+      the view was first loaded.
+    */
+    clearAllFeatures () {
+      // Loop through the geojsons and clear them all
+      for (let key in this.geojson) {
+        // exempt the city and cadastre
+        if (key !== 'cities' || key !== 'cadastre') {
+          // clear the features
+          this.geojson[key] = {}
+        }
+      }
+
+      // remove the Layers and coresponding Sources
+      this.layers.forEach(layer => {
+        this.map.removeLayer(layer)
+        this.map.removeSource(layer)
+      })
+
+      // then clear everything else
+      this.menus = []
+      this.standsList = []
+      this.layers = []
+      this.popup.remove()
     }
   },
 
