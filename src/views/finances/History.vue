@@ -32,9 +32,7 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import config from '@/modules/config'
-  let ApiConfig = config.api
+  import axios from '@/modules/axios'
 
   export default {
     data () {
@@ -59,7 +57,7 @@
     },
     methods: {
       getPaymentsHistory () {
-        axios.get(ApiConfig.baseUrl + '/api/payments/history')
+        axios.get('/payments/history')
           .then(response => {
             this.paymentHistory = response.data.paymenthistory
             this.loading = false

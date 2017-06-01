@@ -239,10 +239,10 @@
 
 <script>
 import mapboxgl from 'mapbox-gl'
-import axios from 'axios'
-import config from '@/modules/config'
+
+import Axios from 'axios' // for use with the paralell requests
+import axios from '@/modules/axios'
 import polylabel from 'polylabel'
-let ApiConfig = config.api
 import moment from 'moment'
 
 export default {
@@ -462,7 +462,7 @@ export default {
       this.showLoading(true)
 
       // fetch the geojson from server
-      axios.get(ApiConfig.baseUrl + '/api/stands?map=true')
+      axios.get('/stands?map=true')
         .then(response => {
           // Store the response for later use
           this.geojson.allStands = response.data.data[0]
@@ -590,7 +590,7 @@ export default {
       this.showLoading(true)
 
       // fetch the geojson from server
-      axios.get(ApiConfig.baseUrl + '/api/stands/available?map=true')
+      axios.get('/stands/available?map=true')
         .then(response => {
           // Store the response for later use
           this.geojson.availableStands = response.data.availablestandsmap[0]
@@ -715,15 +715,16 @@ export default {
       var _this = this
 
       function getCitiesData () {
-        return axios.get(ApiConfig.baseUrl + '/api/cities')
+        return axios.get('/cities')
       }
 
       function getCadatreData () {
-        return axios.get(ApiConfig.baseUrl + '/api/cadastre')
+        return axios.get('/cadastre')
       }
 
-      axios.all([getCitiesData(), getCadatreData()])
-        .then(axios.spread(function (cities, cadastre) {
+      // Note: Axios here is the original axios from npm
+      Axios.all([getCitiesData(), getCadatreData()])
+        .then(Axios.spread(function (cities, cadastre) {
           // Both requests are now complete
           _this.geojson.cadastre = cadastre.data.data[0]
           _this.geojson.cities = cities.data.data[0]
@@ -746,7 +747,7 @@ export default {
       this.showLoading(true)
 
       // fetch the geojson from server
-      axios.get(ApiConfig.baseUrl + '/api/stands/reservations?map=true')
+      axios.get('/stands/reservations?map=true')
         .then(response => {
           // Found the data! save it locally
           this.geojson.reservedStands = response.data.reservedstandsmap[0]
@@ -882,7 +883,7 @@ export default {
       this.showLoading(true)
 
       // fetch the geojson from server
-      axios.get(ApiConfig.baseUrl + '/api/stands/sold?map=true')
+      axios.get('/stands/sold?map=true')
         .then(response => {
         // Found the data! save it locally
           this.geojson.soldStands = response.data.soldstandsmap[0]

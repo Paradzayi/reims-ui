@@ -70,9 +70,7 @@
 </template>
 
 <script>
-import axios from 'axios'
-import config from '@/modules/config'
-let ApiConfig = config.api
+import axios from '@/modules/axios'
 
 export default {
   data () {
@@ -95,7 +93,7 @@ export default {
   },
   methods: {
     getPaymentSummary () {
-      axios.get(ApiConfig.baseUrl + '/api/payments/summary')
+      axios.get('/payments/summary')
         .then(response => {
           this.paymentSummary = response.data.paymentssummary
           this.loading = false

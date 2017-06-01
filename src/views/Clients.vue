@@ -70,9 +70,7 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import config from '../modules/config'
-  let ApiConfig = config.api
+  import axios from '@/modules/axios'
 
   export default {
     name: 'ViewClients',
@@ -100,7 +98,7 @@
     },
     created () {
       // GET /someUrl
-      axios.get(ApiConfig.baseUrl + '/api/clients')
+      axios.get('/clients')
         .then(response => {
           // get body data
           this.clients = response.data.data
@@ -130,7 +128,7 @@
         queryOptions.params.firstname = this.search.firstName !== '' ? this.search.firstName : null
         queryOptions.params.surname = this.search.surname !== '' ? this.search.surname : null
 
-        axios.get(ApiConfig.baseUrl + '/api/clients/search', queryOptions)
+        axios.get('/clients/search', queryOptions)
           .then(response => {
             // get body data
             this.clients = []
