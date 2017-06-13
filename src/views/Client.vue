@@ -98,7 +98,7 @@
         let id = this.$route.params.id
         axios.get('/clients/' + id)
           .then(response => {
-            this.client = response.data.data
+            this.client = response.data.data[0]
           })
           .catch(error => {
             console.log(error)
