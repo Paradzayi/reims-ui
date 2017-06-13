@@ -8,6 +8,10 @@
           <div class="ui mini loading basic segment"> </div>
       </div>
 
+      <buy-summary
+        v-if="openBuySummary === true"
+        @close="openBuySummary = false">
+      </buy-summary>
       <!-- The menu-->
       <div class='ui vertical  orange fluid mini menu'>
         <div class="ui top attached orange segment">
@@ -717,10 +721,10 @@ export default {
               <div class="item">
                 <div class="content">
                   <strong class="header">
+                  ${stand.township}
                     Township
                   </strong>
                   <div class="description">
-                    ${stand.township}
                   </div>
                 </div>
               </div>
