@@ -1,6 +1,9 @@
 <template >
   <div :class="messageCss" v-if="message">
     <i :class="iconCss"></i>{{message}}
+    <button class="ui mini circular icon close button" @click="message = ''">
+      <i class="red remove icon"></i>
+    </button>
   </div>
 </template>
 
@@ -30,5 +33,8 @@ export default {
 
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
+  .ui.circular.close {
+    float: right;
+  }
 </style>
