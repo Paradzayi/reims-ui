@@ -349,8 +349,67 @@ export default {
 
       // Listen to the mouse movements and act accordigly
       this.addMouseMoveEvent()
+
+      // Listen to the clicks and show reserve - buy summary
+      this.addClickEvent()
     },
 
+    /*
+      make the map respond to the clicks on the map
+    */
+    addClickEvent () {
+      this.map.on('click', e => {
+        // Loop through all the registered (ones available for popup info)
+        this.layers.forEach(layer => {
+          // Deregister the layer if it does not exist on the map
+          if (!this.map.getLayer(layer)) {
+            this.layers.splice(this.layers.indexOf(layer), 1)
+          }
+        })
+
+        // Query the features on the map
+        let features = this.map.queryRenderedFeatures(e.point, {
+          layers: this.layers
+        })
+
+        // Change the cursor style as a UI indicator.
+        this.map.getCanvas().style.cursor = features ? 'pointer' : ''
+
+        // Remove the popup if the point on the map does not have any features
+        if (!features || features.length === 0) {
+          this.openBuySummary = false
+          return
+        }
+
+        // The feature on top of the stack i.e the one pointed by the mouse.
+        let feature = features[0]
+
+        // types of states the stand can be in
+        let states = [{
+          id: 'reservedStands', value: 'reserved'
+        },
+        {
+          id: 'soldStands', value: 'sold'
+        },
+        {
+          id: 'availableStands', value: 'available'
+        }]
+
+        console.log(feature)
+
+        states.forEach(featureType => {
+          feature = Array.isArray(feature) ? feature[0] : feature
+          if (featureType.id === feature.layer.id) {
+            this.$store.commit('clickOnStand', {
+              standid: feature.properties.standid,
+              status: featureType.value
+            })
+
+            this.openBuySummary = true
+          }
+        })
+      })
+    },
     /*
       make the map responsive to movements of the mouse.
     */
