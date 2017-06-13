@@ -244,6 +244,7 @@ import Axios from 'axios' // for use with the paralell requests
 import axios from '@/modules/axios'
 import polylabel from 'polylabel'
 import moment from 'moment'
+import BuySummary from '@/components/BuySummary'
 
 export default {
   /*
@@ -311,10 +312,13 @@ export default {
       selectedStandID: '',
 
       // True if there is need to show progress
-      loading: false
+      loading: false,
+
+      openBuySummary: false
     }
   },
 
+  components: {BuySummary},
   /*
     Code that is executed when the component has been compiled
     and ready to be used.
