@@ -9,7 +9,6 @@
 
 <script>
   import Menu from './components/Menu.vue'
-  import config from './modules/config'
 
   export default {
     name: 'app',
@@ -19,9 +18,7 @@
     },
 
     data () {
-      return {
-        sidebarMenus: config.sidebar.menus
-      }
+      return {}
     }
   }
 </script>

@@ -80,9 +80,7 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import config from '../modules/config'
-  let ApiConfig = config.api
+  import axios from '@/modules/axios'
 
   export default {
     created () {
@@ -98,9 +96,9 @@
     methods: {
       getClient () {
         let id = this.$route.params.id
-        axios.get(ApiConfig.baseUrl + '/api/clients/' + id)
+        axios.get('/clients/' + id)
           .then(response => {
-            this.client = response.data.data
+            this.client = response.data.data[0]
           })
           .catch(error => {
             console.log(error)
@@ -109,7 +107,7 @@
 
       getClientHistory () {
         let id = this.$route.params.id
-        axios.get(ApiConfig.baseUrl + '/api/payments/history/' + id)
+        axios.get('/payments/history/' + id)
           .then(response => {
             this.clientHistory = response.data.data
           })

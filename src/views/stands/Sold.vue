@@ -63,9 +63,7 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import config from '@/modules/config'
-  let ApiConfig = config.api
+  import axios from '@/modules/axios'
 
   export default {
     name: 'ViewClients',
@@ -90,7 +88,7 @@
     },
     created () {
       // GET /someUrl
-      axios.get(ApiConfig.baseUrl + '/api/stands/sold')
+      axios.get('/stands/sold')
         .then(response => {
           // get body data
           this.stands = response.data.soldstands

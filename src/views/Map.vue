@@ -8,6 +8,10 @@
           <div class="ui mini loading basic segment"> </div>
       </div>
 
+      <buy-summary
+        v-if="openBuySummary === true"
+        @close="openBuySummary = false">
+      </buy-summary>
       <!-- The menu-->
       <div class='ui vertical  orange fluid mini menu'>
         <div class="ui top attached orange segment">
@@ -239,11 +243,12 @@
 
 <script>
 import mapboxgl from 'mapbox-gl'
-import axios from 'axios'
-import config from '@/modules/config'
+
+import Axios from 'axios' // for use with the paralell requests
+import axios from '@/modules/axios'
 import polylabel from 'polylabel'
-let ApiConfig = config.api
 import moment from 'moment'
+import BuySummary from '@/components/BuySummary'
 
 export default {
   /*
@@ -311,10 +316,13 @@ export default {
       selectedStandID: '',
 
       // True if there is need to show progress
-      loading: false
+      loading: false,
+
+      openBuySummary: false
     }
   },
 
+  components: {BuySummary},
   /*
     Code that is executed when the component has been compiled
     and ready to be used.
@@ -349,8 +357,67 @@ export default {
 
       // Listen to the mouse movements and act accordigly
       this.addMouseMoveEvent()
+
+      // Listen to the clicks and show reserve - buy summary
+      this.addClickEvent()
     },
 
+    /*
+      make the map respond to the clicks on the map
+    */
+    addClickEvent () {
+      this.map.on('click', e => {
+        // Loop through all the registered (ones available for popup info)
+        this.layers.forEach(layer => {
+          // Deregister the layer if it does not exist on the map
+          if (!this.map.getLayer(layer)) {
+            this.layers.splice(this.layers.indexOf(layer), 1)
+          }
+        })
+
+        // Query the features on the map
+        let features = this.map.queryRenderedFeatures(e.point, {
+          layers: this.layers
+        })
+
+        // Change the cursor style as a UI indicator.
+        this.map.getCanvas().style.cursor = features ? 'pointer' : ''
+
+        // Remove the popup if the point on the map does not have any features
+        if (!features || features.length === 0) {
+          this.openBuySummary = false
+          return
+        }
+
+        // The feature on top of the stack i.e the one pointed by the mouse.
+        let feature = features[0]
+
+        // types of states the stand can be in
+        let states = [{
+          id: 'reservedStands', value: 'reserved'
+        },
+        {
+          id: 'soldStands', value: 'sold'
+        },
+        {
+          id: 'availableStands', value: 'available'
+        }]
+
+        console.log(feature)
+
+        states.forEach(featureType => {
+          feature = Array.isArray(feature) ? feature[0] : feature
+          if (featureType.id === feature.layer.id) {
+            this.$store.commit('clickOnStand', {
+              standid: feature.properties.standid,
+              status: featureType.value
+            })
+
+            this.openBuySummary = true
+          }
+        })
+      })
+    },
     /*
       make the map responsive to movements of the mouse.
     */
@@ -462,7 +529,7 @@ export default {
       this.showLoading(true)
 
       // fetch the geojson from server
-      axios.get(ApiConfig.baseUrl + '/api/stands?map=true')
+      axios.get('/stands?map=true')
         .then(response => {
           // Store the response for later use
           this.geojson.allStands = response.data.data[0]
@@ -590,7 +657,7 @@ export default {
       this.showLoading(true)
 
       // fetch the geojson from server
-      axios.get(ApiConfig.baseUrl + '/api/stands/available?map=true')
+      axios.get('/stands/available?map=true')
         .then(response => {
           // Store the response for later use
           this.geojson.availableStands = response.data.availablestandsmap[0]
@@ -654,10 +721,10 @@ export default {
               <div class="item">
                 <div class="content">
                   <strong class="header">
+                  ${stand.township}
                     Township
                   </strong>
                   <div class="description">
-                    ${stand.township}
                   </div>
                 </div>
               </div>
@@ -715,15 +782,16 @@ export default {
       var _this = this
 
       function getCitiesData () {
-        return axios.get(ApiConfig.baseUrl + '/api/cities')
+        return axios.get('/cities')
       }
 
       function getCadatreData () {
-        return axios.get(ApiConfig.baseUrl + '/api/cadastre')
+        return axios.get('/cadastre')
       }
 
-      axios.all([getCitiesData(), getCadatreData()])
-        .then(axios.spread(function (cities, cadastre) {
+      // Note: Axios here is the original axios from npm
+      Axios.all([getCitiesData(), getCadatreData()])
+        .then(Axios.spread(function (cities, cadastre) {
           // Both requests are now complete
           _this.geojson.cadastre = cadastre.data.data[0]
           _this.geojson.cities = cities.data.data[0]
@@ -746,7 +814,7 @@ export default {
       this.showLoading(true)
 
       // fetch the geojson from server
-      axios.get(ApiConfig.baseUrl + '/api/stands/reservations?map=true')
+      axios.get('/stands/reservations?map=true')
         .then(response => {
           // Found the data! save it locally
           this.geojson.reservedStands = response.data.reservedstandsmap[0]
@@ -882,7 +950,7 @@ export default {
       this.showLoading(true)
 
       // fetch the geojson from server
-      axios.get(ApiConfig.baseUrl + '/api/stands/sold?map=true')
+      axios.get('/stands/sold?map=true')
         .then(response => {
         // Found the data! save it locally
           this.geojson.soldStands = response.data.soldstandsmap[0]
