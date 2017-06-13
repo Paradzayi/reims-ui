@@ -33,8 +33,8 @@
             <td>
               <a @click="selectStand(stand)"><i class="home icon"></i> {{stand.standid}}</a>
             </td>
-            <td>{{stand.township_name}}</td>
-            <td>{{stand.city_name}}</td>
+            <td>{{stand.township}}</td>
+            <td>{{stand.city}}</td>
             <td>
               <router-link :to="{path: `/clients/${stand.clientid}`}">
                <i class="user outline icon"></i>
@@ -63,9 +63,7 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import config from '@/modules/config'
-  let ApiConfig = config.api
+  import axios from '@/modules/axios'
 
   export default {
     name: 'ViewClients',
@@ -90,7 +88,7 @@
     },
     created () {
       // GET /someUrl
-      axios.get(ApiConfig.baseUrl + '/api/stands/sold')
+      axios.get('/stands/sold')
         .then(response => {
           // get body data
           this.stands = response.data.soldstands
