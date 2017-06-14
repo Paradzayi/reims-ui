@@ -44,7 +44,7 @@
 
     computed: {
       stand () {
-        return this.$store.state.clickedStand
+        return this.$store.state.stands.clickedStand
       }
     },
     components: {Message},
