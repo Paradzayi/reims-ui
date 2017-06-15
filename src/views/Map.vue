@@ -260,6 +260,11 @@ export default {
     */
     cities () {
       return this.$store.getters.cities
+    },
+
+    allStands () {
+      console.log(this.$store.getters.allStands)
+      return this.$store.getters.allStands
     }
   },
   /*
@@ -499,122 +504,7 @@ export default {
     fetchAllStands () {
       // Show the loading progress
       this.showLoading(true)
-
-      // fetch the geojson from server
-      axios.get('/stands?map=true')
-        .then(response => {
-          // Store the response for later use
-          this.geojson.allStands = response.data.data[0]
-
-          // first check if there are any features in the geojson
-          if (!!this.geojson.allStands.features === false) {
-            // Exit the function if there aren't
-            this.showLoading(false)
-            return
-          }
-
-          // only add the source if the source has not been added before
-          if (!this.map.getSource('allStands')) {
-            // add source
-            this.map.addSource('allStands', {
-              type: 'geojson',
-              'data': this.geojson.allStands
-            })
-          }
-
-          // Destroy any layer for stands and add a new one
-          if (this.map.getLayer('allStands')) {
-            this.map.removeLayer('allStands')
-          }
-
-          // Define the allStandsStyle
-          let allStandsStyle = {
-            'id': 'allStands',
-            'type': 'fill',
-            'source': 'allStands',
-            'paint': {
-              'fill-color': 'brown',
-              'fill-opacity': 0.7,
-              'fill-outline-color': 'white'
-            }
-          }
-
-          // Add stands layer
-          this.map.addLayer(allStandsStyle)
-
-          // Then register the layer with the component's data
-          this.layers.push('allStands')
-
-          // Then register the style  with the component's data
-          this.layerStyles.push(allStandsStyle)
-
-          this.popups.allStands = function (feature) {
-            let stand = feature.properties
-
-            let popupHTML = `
-            <div clas = "ui list">
-              <div class = "item">
-                <div class = "ui basic brown inverted segment">ALL STANDS</div>
-              </div>
-              <br>
-              <div class = "item">
-                <h3 class = "ui header">Stand <div class="ui horizontal brown label"> ${stand.standid} </div></h3>
-                <div class="ui divider">
-              </div>
-
-              <div class="item">
-                <div class="content">
-                  <strong class="header">
-                    Township
-                  </strong>
-                  <div class="description">
-                    ${stand.township}
-                  </div>
-                </div>
-              </div>
-
-              <div class="item">
-                <div class="content">
-                  <strong class="header">
-                    City
-                  </Strong>
-                  <div class="description">
-                    ${stand.city}
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            `
-            return popupHTML
-          }
-
-          // the menu variable to be shown in the tabular menu
-          let allStandsMenu = {
-            id: 'allStands',
-            title: 'All',
-            active: true
-          }
-
-          // register the menu only if it has not been registered
-          if (this.menus.find(menu => { return menu.id === allStandsMenu.id }) === undefined) {
-            this.menus.push(allStandsMenu)
-          }
-
-          // Then select the menu deselecting others in the process
-          this.selectMenu(allStandsMenu)
-
-          // Disable the loading progress
-          this.showLoading(false)
-        })
-        .catch(err => {
-          if (err) {
-            console.log(err)
-
-            // Disable the loading progress
-            this.showLoading(false)
-          }
-        })
+      this.$store.dispatch('getAllStands')
     },
 
     /*
@@ -1123,7 +1013,7 @@ export default {
 
         case 'allStands':
           _this.standsList = []
-          dynamicallyPushStands(this.geojson.allStands.features)
+          dynamicallyPushStands(this.allStands.features)
           break
 
         case 'availableStands':
@@ -1330,6 +1220,109 @@ export default {
       if (this.searchStandString === '') {
         this.showStandsByMenu()
       }
+    },
+
+    allStands () {
+      // first check if there are any features in the geojson
+      if (!!this.allStands.features === false) {
+        // Exit the function if there aren't
+        this.showLoading(false)
+        return
+      }
+
+      // only add the source if the source has not been added before
+      if (!this.map.getSource('allStands')) {
+        // add source
+        this.map.addSource('allStands', {
+          type: 'geojson',
+          'data': this.allStands
+        })
+      }
+
+      // Destroy any layer for stands and add a new one
+      if (this.map.getLayer('allStands')) {
+        this.map.removeLayer('allStands')
+      }
+
+      // Define the allStandsStyle
+      let allStandsStyle = {
+        'id': 'allStands',
+        'type': 'fill',
+        'source': 'allStands',
+        'paint': {
+          'fill-color': 'brown',
+          'fill-opacity': 0.7,
+          'fill-outline-color': 'white'
+        }
+      }
+
+      // Add stands layer
+      this.map.addLayer(allStandsStyle)
+
+      // Then register the layer with the component's data
+      this.layers.push('allStands')
+
+      // Then register the style  with the component's data
+      this.layerStyles.push(allStandsStyle)
+
+      this.popups.allStands = function (feature) {
+        let stand = feature.properties
+
+        let popupHTML = `
+        <div clas = "ui list">
+          <div class = "item">
+            <div class = "ui basic brown inverted segment">ALL STANDS</div>
+          </div>
+          <br>
+          <div class = "item">
+            <h3 class = "ui header">Stand <div class="ui horizontal brown label"> ${stand.standid} </div></h3>
+            <div class="ui divider">
+          </div>
+
+          <div class="item">
+            <div class="content">
+              <strong class="header">
+                Township
+              </strong>
+              <div class="description">
+                ${stand.township}
+              </div>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="content">
+              <strong class="header">
+                City
+              </Strong>
+              <div class="description">
+                ${stand.city}
+              </div>
+            </div>
+          </div>
+
+        </div>
+        `
+        return popupHTML
+      }
+
+      // the menu variable to be shown in the tabular menu
+      let allStandsMenu = {
+        id: 'allStands',
+        title: 'All',
+        active: true
+      }
+
+      // register the menu only if it has not been registered
+      if (this.menus.find(menu => { return menu.id === allStandsMenu.id }) === undefined) {
+        this.menus.push(allStandsMenu)
+      }
+
+      // Then select the menu deselecting others in the process
+      this.selectMenu(allStandsMenu)
+
+      // Disable the loading progress
+      this.showLoading(false)
     }
   }
 }
