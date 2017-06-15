@@ -272,7 +272,6 @@ export default {
 
       // The geogarphies that will be laid onto the map
       geojson: {
-        cadastre: {},
         allStands: {},
         availableStands: {},
         reservedStands: {},
@@ -478,13 +477,10 @@ export default {
     },
 
     /*
-      when the map loads add cities and cadastre sources
+      when the map loads add cities sources
       and create the static layers for them
     */
     addLoadEvent () {
-      // fix for calling this component inside functions where this will be undifined
-      var _this = this
-
       // Listen to the load event
       this.map.on('load', () => {
         // Add cities source
@@ -504,22 +500,6 @@ export default {
           }
         })
 
-        this.map.addSource('cadastre', {
-          type: 'geojson',
-          'data': _this.geojson.cadastre
-        })
-
-        // Add stands layer
-        this.map.addLayer({
-          'id': 'cadsatre',
-          'type': 'fill',
-          'source': 'cadastre',
-          'paint': {
-            'fill-color': 'pink',
-            'fill-opacity': 0.2,
-            'fill-outline-color': 'red'
-          }
-        })
         // Add the Naviagtion control that allows one to pan and zoom the map
         this.map.addControl(new mapboxgl.NavigationControl())
 
@@ -784,8 +764,7 @@ export default {
     },
 
     /*
-      fetch the data fro the cities and cadastre and Store
-      it in the data() function
+      fetch the data for the cities and store it in vuex
     */
     fetchBaseItems () {
       this.$store.dispatch('getBaseLayer')
@@ -1301,11 +1280,7 @@ export default {
     clearAllFeatures () {
       // Loop through the geojsons and clear them all
       for (let key in this.geojson) {
-        // exempt the city and cadastre
-        if (key !== 'cities' || key !== 'cadastre') {
-          // clear the features
-          this.geojson[key] = {}
-        }
+        this.geojson[key] = {}
       }
 
       // remove the Layers and coresponding Sources
