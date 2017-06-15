@@ -7,6 +7,7 @@ export default {
   geojson: {
     cities: {},
     allStands: {},
-    availableStands: {}
+    availableStands: {},
+    reservedStands: {}
   }
 }
