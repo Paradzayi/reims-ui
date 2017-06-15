@@ -3,5 +3,7 @@ export default{
 
   allStands: state => state.geojson.allStands,
 
-  availableStands: state => state.geojson.availableStands
+  availableStands: state => state.geojson.availableStands,
+
+  reservedStands: state => state.geojson.reservedStands
 }
