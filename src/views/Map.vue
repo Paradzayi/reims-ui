@@ -26,7 +26,7 @@
 
         <!-- The reservedStads menu item-->
         <div
-          :class="{active: geojson.allStands.features, item: true, link: true}">
+          :class="{active: allStands.features, item: true, link: true}">
 
           <!-- Fetch reserved items when you click here -->
           <a
@@ -37,20 +37,20 @@
           <!-- show the user a red zero if there are no reserved items -->
           <div
             class="ui red basic label"
-            v-if = "geojson.allStands.type && !!geojson.allStands.features === false">
+            v-if = "allStands.type && !!allStands.features === false">
             0
           </div>
 
-          <!-- show the user the number of reserved items -->
+          <!-- show the user the number of all stands -->
           <div
             class="ui brown basic label"
-            v-if = "geojson.allStands.features">
-            {{ geojson.allStands.features.length }}
+            v-if = "allStands.features">
+            {{allStands.features.length }}
           </div>
 
           <!-- Allow the user to toggle the layers if they are present -->
           <div
-            v-if = "geojson.allStands.features">
+            v-if = "allStands.features">
             <p>
               <div class="ui slider checkbox">
                 <input
@@ -263,7 +263,6 @@ export default {
     },
 
     allStands () {
-      console.log(this.$store.getters.allStands)
       return this.$store.getters.allStands
     }
   },
@@ -416,8 +415,6 @@ export default {
         {
           id: 'availableStands', value: 'available'
         }]
-
-        console.log(feature)
 
         states.forEach(featureType => {
           feature = Array.isArray(feature) ? feature[0] : feature
@@ -1090,7 +1087,7 @@ export default {
           break
 
         case 'allStands':
-          feature = _this.geojson.allStands.features.find(feature => {
+          feature = _this.allStands.features.find(feature => {
             return feature.properties.standid === stand.standid
           })
 
