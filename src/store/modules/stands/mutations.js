@@ -21,5 +21,9 @@ export default {
 
   [types.RECIEVE_RESERVED_STANDS] (state, payload) {
     state.geojson.reservedStands = payload
+  },
+
+  [types.RECIEVE_SOLD_STANDS] (state, payload) {
+    state.geojson.soldStands = payload
   }
 }
