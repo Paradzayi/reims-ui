@@ -33,6 +33,10 @@ export default {
         ? state.geojson[key]
         : {}
     }
+  },
+
+  [types.NEW_STANDS_LIST] (state, payload) {
+    state.standsList = payload
   }
 
 }
