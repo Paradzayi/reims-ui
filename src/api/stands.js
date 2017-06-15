@@ -14,6 +14,17 @@ function getBaseLayer () {
   })
 }
 
+function getAllStands () {
+  return new Promise((resolve, reject) => {
+    axios.get('/stands?map=true')
+      .then(res => {
+        resolve(res.data.data[0])
+      })
+      .catch(reject)
+  })
+}
+
 export default {
-  getBaseLayer
+  getBaseLayer,
+  getAllStands
 }
