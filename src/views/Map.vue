@@ -483,23 +483,6 @@ export default {
     addLoadEvent () {
       // Listen to the load event
       this.map.on('load', () => {
-        // Add cities source
-        this.map.addSource('cities', {
-          type: 'geojson',
-          'data': this.cities
-        })
-
-        // Add stands layer
-        this.map.addLayer({
-          'id': 'cities',
-          'type': 'fill',
-          'source': 'cities',
-          'paint': {
-            'fill-opacity': 0.2,
-            'fill-outline-color': 'red'
-          }
-        })
-
         // Add the Naviagtion control that allows one to pan and zoom the map
         this.map.addControl(new mapboxgl.NavigationControl())
 
@@ -1294,6 +1277,36 @@ export default {
       this.standsList = []
       this.layers = []
       this.popup.remove()
+    },
+
+    //
+    updateCitiesSource () {
+      if (this.map.getSource('cities')) {
+        this.map.removeSource('cities')
+      }
+
+      // Add cities source
+      this.map.addSource('cities', {
+        type: 'geojson',
+        'data': this.cities
+      })
+    },
+
+    updateCitiesLayer () {
+      if (this.map.getLayer('cities')) {
+        this.map.removeLayer('cities')
+      }
+
+      // Add stands layer
+      this.map.addLayer({
+        'id': 'cities',
+        'type': 'fill',
+        'source': 'cities',
+        'paint': {
+          'fill-opacity': 0.2,
+          'fill-outline-color': 'red'
+        }
+      })
     }
   },
 
@@ -1318,6 +1331,15 @@ export default {
       if (this.searchStandString === '') {
         this.showStandsByMenu()
       }
+    },
+
+    /*
+      Update the cities sources and layers if the cities (from vuex)
+      changes
+    */
+    cities () {
+      this.updateCitiesSource()
+      this.updateCitiesLayer()
     }
   }
 }
