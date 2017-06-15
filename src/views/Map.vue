@@ -259,7 +259,7 @@ export default {
       The geojson of the cities brought by the api.
     */
     cities () {
-      return this.$store.state.stands.geojson.cities
+      return this.$store.getters.cities
     }
   },
   /*

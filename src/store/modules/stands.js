@@ -36,8 +36,15 @@ const mutations = {
   }
 }
 
+const getters = {
+  cities (state) {
+    return state.geojson.cities
+  }
+}
+
 export default {
   state,
   mutations,
-  actions
+  actions,
+  getters
 }
