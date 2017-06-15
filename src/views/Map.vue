@@ -146,7 +146,7 @@
 
         <!-- The reservedStads menu item-->
         <div
-          :class="{active: geojson.soldStands.features, item: true, link: true}">
+          :class="{active: soldStands.features, item: true, link: true}">
 
           <!-- Fetch reserved items when you click here -->
           <a
@@ -158,20 +158,20 @@
           <!-- show the user a red zero if there are no sold items -->
           <div
             class="ui red basic label"
-            v-if = "geojson.soldStands.type && !!geojson.soldStands.features === false">
+            v-if = "soldStands.type && !!soldStands.features === false">
             0
           </div>
 
           <!-- show the user the number of reserved items -->
           <div
             class="ui green basic label"
-            v-if = "geojson.soldStands.features">
-            {{ geojson.soldStands.features.length }}
+            v-if = "soldStands.features">
+            {{ soldStands.features.length }}
           </div>
 
           <!-- Allow the user to toggle the layers if they are present -->
           <div
-            v-if = "geojson.soldStands.features">
+            v-if = "soldStands.features">
             <p>
               <div class="ui slider checkbox">
                 <input
@@ -244,7 +244,6 @@
 <script>
 import mapboxgl from 'mapbox-gl'
 
-import axios from '@/modules/axios'
 import polylabel from 'polylabel'
 import moment from 'moment'
 import BuySummary from '@/components/BuySummary'
@@ -272,6 +271,10 @@ export default {
 
     reservedStands () {
       return this.$store.getters.reservedStands
+    },
+
+    soldStands () {
+      return this.$store.getters.soldStands
     }
   },
   /*
@@ -541,125 +544,9 @@ export default {
       fetch the soldStands and store them locally in the data() function
     */
     fetchSoldStands () {
-      // fix for calling this component inside functions where this will be undifined
-      var _this = this
-
       // Show the loading progress
       this.showLoading(true)
-
-      // fetch the geojson from server
-      axios.get('/stands/sold?map=true')
-        .then(response => {
-        // Found the data! save it locally
-          this.geojson.soldStands = response.data.soldstandsmap[0]
-
-          // first check if there are any features in the geojson
-          if (!!this.geojson.soldStands.features === false) {
-            // Exit the function if there aren't
-            this.showLoading(false)
-            return
-          }
-
-          // only add the source if the source has not been added before
-          if (!this.map.getSource('soldStands')) {
-            // add source
-            this.map.addSource('soldStands', {
-              type: 'geojson',
-              'data': _this.geojson.soldStands
-            })
-          }
-
-          // Destroy any layer for reserved stands and add a new one
-          if (this.map.getLayer('soldStands')) {
-            this.map.removeLayer('soldStands')
-          }
-
-          // Define the reservedStandsStyle
-          let soldStandsStyle = {
-            'id': 'soldStands',
-            'type': 'fill',
-            'source': 'soldStands',
-            'paint': {
-              'fill-color': 'green',
-              'fill-opacity': 0.7,
-              'fill-outline-color': 'sienna'
-            }
-          }
-
-          // Add stands layer
-          this.map.addLayer(soldStandsStyle)
-
-          // Then register the layer with the component's data
-          this.layers.push('soldStands')
-
-          // Then register the style  with the component's data
-          this.layerStyles.push(soldStandsStyle)
-
-          this.popups.soldStands = function (feature) {
-            let stand = feature.properties
-
-            let popupHTML = `
-            <div clas = "ui list">
-              <div class = "item">
-                <div class = "ui basic green inverted segment">SOLD</div>
-              </div>
-              <br>
-              <div class = "item">
-                <h3 class = "ui header">Stand <div class="ui horizontal green label"> ${stand.standid} </div></h3>
-
-                <div class = "ui divider"></div>
-
-              </div>
-
-              <div class = "item">
-                <div class = "content">
-                  <strong class="header">Sold to</strong>
-                  <div class = "description">
-                    ${stand.firstname} ${stand.surname}
-                  </div>
-                </div>
-              </div>
-
-              <div class = "item">
-                <div class = "content">
-                  <strong class="header">Email</strong>
-                  <div class = "description">
-                    <a href="mailto:${stand.email}">${stand.email}</a>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            `
-            return popupHTML
-          }
-
-          // the menu variable to be shown in the tabular menu
-          let soldStandsMenu = {
-            id: 'soldStands',
-            title: 'Sold',
-            active: false
-          }
-
-          // register the menu only if it has not been registered
-          if (this.menus.find(menu => { return menu.id === soldStandsMenu.id }) === undefined) {
-            this.menus.push(soldStandsMenu)
-          }
-
-          // Then select the menu deselecting others in the process
-          this.selectMenu(soldStandsMenu)
-
-          // Disable the loading progress
-          this.showLoading(false)
-        })
-      .catch(err => {
-        if (err) {
-          console.log(err)
-
-          // Disable the loading progress
-          this.showLoading(false)
-        }
-      })
+      this.$store.dispatch('getSoldStands')
     },
     /*
       add or remove layers. Says no to frequent server requests
@@ -767,7 +654,7 @@ export default {
 
         case 'soldStands':
           _this.standsList = []
-          dynamicallyPushStands(this.geojson.soldStands.features)
+          dynamicallyPushStands(this.soldStands.features)
           break
 
         case 'allStands':
@@ -837,7 +724,7 @@ export default {
           break
 
         case 'soldStands':
-          feature = _this.geojson.soldStands.features.find(feature => {
+          feature = _this.soldStands.features.find(feature => {
             return feature.properties.standid === stand.standid
           })
 
@@ -1295,6 +1182,107 @@ export default {
 
       // Then select the menu deselecting others in the process
       this.selectMenu(reservedStandsMenu)
+
+      // Disable the loading progress
+      this.showLoading(false)
+    },
+
+    soldStands () {
+      // first check if there are any features in the geojson
+      if (!!this.soldStands.features === false) {
+        // Exit the function if there aren't
+        this.showLoading(false)
+        return
+      }
+
+      // only add the source if the source has not been added before
+      if (!this.map.getSource('soldStands')) {
+        // add source
+        this.map.addSource('soldStands', {
+          type: 'geojson',
+          'data': this.soldStands
+        })
+      }
+
+      // Destroy any layer for reserved stands and add a new one
+      if (this.map.getLayer('soldStands')) {
+        this.map.removeLayer('soldStands')
+      }
+
+      // Define the reservedStandsStyle
+      let soldStandsStyle = {
+        'id': 'soldStands',
+        'type': 'fill',
+        'source': 'soldStands',
+        'paint': {
+          'fill-color': 'green',
+          'fill-opacity': 0.7,
+          'fill-outline-color': 'sienna'
+        }
+      }
+
+      // Add stands layer
+      this.map.addLayer(soldStandsStyle)
+
+      // Then register the layer with the component's data
+      this.layers.push('soldStands')
+
+      // Then register the style  with the component's data
+      this.layerStyles.push(soldStandsStyle)
+
+      this.popups.soldStands = function (feature) {
+        let stand = feature.properties
+
+        let popupHTML = `
+        <div clas = "ui list">
+          <div class = "item">
+            <div class = "ui basic green inverted segment">SOLD</div>
+          </div>
+          <br>
+          <div class = "item">
+            <h3 class = "ui header">Stand <div class="ui horizontal green label"> ${stand.standid} </div></h3>
+
+            <div class = "ui divider"></div>
+
+          </div>
+
+          <div class = "item">
+            <div class = "content">
+              <strong class="header">Sold to</strong>
+              <div class = "description">
+                ${stand.firstname} ${stand.surname}
+              </div>
+            </div>
+          </div>
+
+          <div class = "item">
+            <div class = "content">
+              <strong class="header">Email</strong>
+              <div class = "description">
+                <a href="mailto:${stand.email}">${stand.email}</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        `
+        return popupHTML
+      }
+
+      // the menu variable to be shown in the tabular menu
+      let soldStandsMenu = {
+        id: 'soldStands',
+        title: 'Sold',
+        active: false
+      }
+
+      // register the menu only if it has not been registered
+      if (this.menus.find(menu => { return menu.id === soldStandsMenu.id }) === undefined) {
+        this.menus.push(soldStandsMenu)
+      }
+
+      // Then select the menu deselecting others in the process
+      this.selectMenu(soldStandsMenu)
 
       // Disable the loading progress
       this.showLoading(false)
