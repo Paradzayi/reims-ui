@@ -497,9 +497,6 @@ export default {
       fetch data for the stands and store it in the data() function
     */
     fetchAllStands () {
-      // fix for calling this component inside functions where this will be undifined
-      var _this = this
-
       // Show the loading progress
       this.showLoading(true)
 
@@ -521,7 +518,7 @@ export default {
             // add source
             this.map.addSource('allStands', {
               type: 'geojson',
-              'data': _this.geojson.allStands
+              'data': this.geojson.allStands
             })
           }
 
