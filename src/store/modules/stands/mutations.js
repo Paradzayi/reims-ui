@@ -1,7 +1,7 @@
 import * as types from '@/store/mutation-types'
 
 export default {
-  clickOnStand (state, payload) {
+  [types.CLICK_ON_STAND] (state, payload) {
     if (payload.standid && payload.status) {
       state.clickedStand = payload
     }

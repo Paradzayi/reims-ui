@@ -423,7 +423,7 @@ export default {
         states.forEach(featureType => {
           feature = Array.isArray(feature) ? feature[0] : feature
           if (featureType.id === feature.layer.id) {
-            this.$store.commit('clickOnStand', {
+            this.$store.commit('CLICK_ON_STAND', {
               standid: feature.properties.standid,
               status: featureType.value
             })
