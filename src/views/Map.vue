@@ -797,16 +797,13 @@ export default {
     */
     clearAllFeatures () {
       // Loop through the geojsons and clear them all
-      for (let key in this.geojson) {
-        this.geojson[key] = {}
-      }
-
-      // remove the Layers and coresponding Sources
+      this.$store.commit('CLEAR_ALL_STANDS')
+       // remove the Layers and coresponding Sources
       this.layers.forEach(layer => {
         this.map.removeLayer(layer)
         this.map.removeSource(layer)
       })
-
+      
       // then clear everything else
       this.menus = []
       this.standsList = []
