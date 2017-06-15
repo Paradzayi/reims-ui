@@ -33,8 +33,20 @@ function getAvailableStands () {
       .catch(reject)
   })
 }
+
+function getReservedStands () {
+  return new Promise((resolve, reject) => {
+    axios.get('/stands/reservations?map=true')
+      .then(res => {
+        resolve(res.data.reservedstandsmap[0])
+      })
+      .catch(reject)
+  })
+}
+
 export default {
   getBaseLayer,
   getAllStands,
-  getAvailableStands
+  getAvailableStands,
+  getReservedStands
 }
