@@ -275,6 +275,12 @@ export default {
 
     soldStands () {
       return this.$store.getters.soldStands
+    },
+
+    // The list of stands to show in the list so that the user can
+    // zoom to the stand
+    standsList () {
+      return this.$store.getters.standsList
     }
   },
   /*
@@ -328,10 +334,6 @@ export default {
       // The tabular menus to toggle between different types of stand
       // to show on the map
       menus: [],
-
-      // The list of stands to show in the list so that the user can
-      // zoom to the stand
-      standsList: [],
 
       // The string used to filter the stands in the list
       searchStandString: '',
@@ -619,12 +621,9 @@ export default {
       // Only start filtering if the search string is > 2 for perfomance reasons
       // (also returns more relevant result)
       if (this.searchStandString.length > 2) {
-        this.standsList = this.standsList.filter(stand => {
-          // filter by standid, township or city
-          return stand.standid.indexOf(value) > -1 ||
-                 stand.township.toLowerCase().indexOf(value) > -1 ||
-                 stand.city.toLowerCase().indexOf(value) > -1
-        })
+        this.$store.commit('NEW_STANDS_LIST',
+          this.standsList.filter(stand => stand.standid.indexOf(value) > -1 || stand.township.toLowerCase().indexOf(value) > -1 || stand.city.toLowerCase().indexOf(value) > -1)
+        )
       }
     },
 
@@ -645,25 +644,22 @@ export default {
       }
 
       var _this = this
+      var standsList = []
 
       switch (selectedStandMenu.id) {
         case 'reservedStands':
-          _this.standsList = []
           dynamicallyPushStands(this.reservedStands.features)
           break
 
         case 'soldStands':
-          _this.standsList = []
           dynamicallyPushStands(this.soldStands.features)
           break
 
         case 'allStands':
-          _this.standsList = []
           dynamicallyPushStands(this.allStands.features)
           break
 
         case 'availableStands':
-          _this.standsList = []
           dynamicallyPushStands(this.availableStands.features)
           break
         default:
@@ -673,22 +669,16 @@ export default {
       function dynamicallyPushStands (features) {
         features.forEach(feature => {
           // Only push what is required to save memory
-          let standid = feature.properties.standid
-          let township = feature.properties.township
-          let city = feature.properties.city
-          let coordinates = feature.geometry.coordinates
-
-          _this.standsList.push({
-            standid,
-            township,
-            city,
-            coordinates
+          standsList.push({
+            standid: feature.properties.standid,
+            township: feature.properties.township,
+            city: feature.properties.city,
+            coordinates: feature.geometry.coordinates
           })
         })
-      }
 
-      // Done! Return the list of fresh stands
-      return this.standsList
+        _this.$store.commit('NEW_STANDS_LIST', standsList)
+      }
     },
 
     /*
@@ -803,10 +793,9 @@ export default {
         this.map.removeLayer(layer)
         this.map.removeSource(layer)
       })
-      
+
       // then clear everything else
       this.menus = []
-      this.standsList = []
       this.layers = []
       this.popup.remove()
     },
