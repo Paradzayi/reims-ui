@@ -24,7 +24,17 @@ function getAllStands () {
   })
 }
 
+function getAvailableStands () {
+  return new Promise((resolve, reject) => {
+    axios.get('/stands/available?map=true')
+      .then(res => {
+        resolve(res.data.availablestandsmap[0])
+      })
+      .catch(reject)
+  })
+}
 export default {
   getBaseLayer,
-  getAllStands
+  getAllStands,
+  getAvailableStands
 }
