@@ -252,6 +252,18 @@ import BuySummary from '@/components/BuySummary'
 
 export default {
   /*
+    Dynamic values that are used by components,
+    Updates in real time.
+  */
+  computed: {
+    /*
+      The geojson of the cities brought by the api.
+    */
+    cities () {
+      return this.$store.state.stands.geojson.cities
+    }
+  },
+  /*
     The warehouse of this component.
     Store anything that is required by more than
     one function.
@@ -261,7 +273,7 @@ export default {
 
       // The geogarphies that will be laid onto the map
       geojson: {
-        cities: {},
+        cities: this.cities,
         cadastre: {},
         allStands: {},
         availableStands: {},
@@ -480,7 +492,7 @@ export default {
         // Add cities source
         this.map.addSource('cities', {
           type: 'geojson',
-          'data': _this.geojson.cities
+          'data': this.cities
         })
 
         // Add stands layer
@@ -801,6 +813,7 @@ export default {
             console.log(err)
           }
         })
+      this.$store.dispatch('getBaseLayer')
     },
 
     /*
