@@ -8,7 +8,8 @@ const state = {
   },
 
   geojson: {
-    cities: {}
+    cities: {},
+    allStands: {}
   }
 }
 
@@ -20,6 +21,13 @@ const actions = {
       })
       .catch(error => {
         console.log(error)
+      })
+  },
+
+  getAllStands ({ commit }) {
+    api.stands.getAllStands()
+      .then(allStands => {
+        commit(types.RECIEVE_ALL_STANDS, allStands)
       })
   }
 }
@@ -33,12 +41,20 @@ const mutations = {
 
   [types.RECIEVE_CITIES] (state, payload) {
     state.geojson.cities = payload
+  },
+
+  [types.RECIEVE_ALL_STANDS] (state, payload) {
+    state.geojson.allStands = payload
   }
 }
 
 const getters = {
   cities (state) {
     return state.geojson.cities
+  },
+
+  allStands (state) {
+    return state.geojson.allStands
   }
 }
 
