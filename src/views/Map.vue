@@ -244,7 +244,6 @@
 <script>
 import mapboxgl from 'mapbox-gl'
 
-import Axios from 'axios' // for use with the paralell requests
 import axios from '@/modules/axios'
 import polylabel from 'polylabel'
 import moment from 'moment'
@@ -273,7 +272,6 @@ export default {
 
       // The geogarphies that will be laid onto the map
       geojson: {
-        cities: this.cities,
         cadastre: {},
         allStands: {},
         availableStands: {},
@@ -790,29 +788,6 @@ export default {
       it in the data() function
     */
     fetchBaseItems () {
-      // fix for calling this component inside functions where this will be undifined
-      var _this = this
-
-      function getCitiesData () {
-        return axios.get('/cities')
-      }
-
-      function getCadatreData () {
-        return axios.get('/cadastre')
-      }
-
-      // Note: Axios here is the original axios from npm
-      Axios.all([getCitiesData(), getCadatreData()])
-        .then(Axios.spread(function (cities, cadastre) {
-          // Both requests are now complete
-          _this.geojson.cadastre = cadastre.data.data[0]
-          _this.geojson.cities = cities.data.data[0]
-        }))
-        .catch(err => {
-          if (err) {
-            console.log(err)
-          }
-        })
       this.$store.dispatch('getBaseLayer')
     },
 
