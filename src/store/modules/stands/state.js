@@ -8,6 +8,7 @@ export default {
     cities: {},
     allStands: {},
     availableStands: {},
-    reservedStands: {}
+    reservedStands: {},
+    soldStands: {}
   }
 }
