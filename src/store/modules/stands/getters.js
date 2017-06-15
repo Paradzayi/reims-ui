@@ -1,13 +1,7 @@
 export default{
-  cities (state) {
-    return state.geojson.cities
-  },
+  cities: state => state.geojson.cities,
 
-  allStands (state) {
-    return state.geojson.allStands
-  },
+  allStands: state => state.geojson.allStands,
 
-  availableStands (state) {
-    return state.geojson.availableStands
-  }
+  availableStands: state => state.geojson.availableStands
 }
