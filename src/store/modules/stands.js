@@ -1,7 +1,26 @@
+import api from '@/api'
+import * as types from '@/store/mutation-types'
+
 const state = {
   clickedStand: {
     standid: null,
     status: null
+  },
+
+  geojson: {
+    cities: {}
+  }
+}
+
+const actions = {
+  getBaseLayer ({ commit, state }) {
+    api.stands.getBaseLayer()
+      .then(cities => {
+        commit(types.RECIEVE_CITIES, cities)
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 }
 
@@ -10,10 +29,15 @@ const mutations = {
     if (payload.standid && payload.status) {
       state.clickedStand = payload
     }
+  },
+
+  [types.RECIEVE_CITIES] (state, payload) {
+    state.geojson.cities = payload
   }
 }
 
 export default {
   state,
-  mutations
+  mutations,
+  actions
 }
