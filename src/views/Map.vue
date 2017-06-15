@@ -106,7 +106,7 @@
 
         <!-- The reservedStads menu item-->
         <div
-          :class="{active: geojson.reservedStands.features, item: true, link: true}">
+          :class="{active: reservedStands.features, item: true, link: true}">
 
           <!-- Fetch reserved items when you click here -->
           <a
@@ -117,20 +117,20 @@
           <!-- show the user a red zero if there are no reserved items -->
           <div
             class="ui red basic label"
-            v-if = "geojson.reservedStands.type && !!geojson.reservedStands.features === false">
+            v-if = "reservedStands.type && !!reservedStands.features === false">
             0
           </div>
 
           <!-- show the user the number of reserved items -->
           <div
             class="ui orange basic label"
-            v-if = "geojson.reservedStands.features">
-            {{ geojson.reservedStands.features.length }}
+            v-if = "reservedStands.features">
+            {{ reservedStands.features.length }}
           </div>
 
           <!-- Allow the user to toggle the layers if they are present -->
           <div
-            v-if = "geojson.reservedStands.features">
+            v-if = "reservedStands.features">
             <p>
               <div class="ui slider checkbox">
                 <input
@@ -268,6 +268,10 @@ export default {
 
     availableStands () {
       return this.$store.getters.availableStands
+    },
+
+    reservedStands () {
+      return this.$store.getters.reservedStands
     }
   },
   /*
@@ -528,136 +532,9 @@ export default {
       fetch the reservedStands and store them locally in the data() function
     */
     fetchReservedStands () {
-      // fix for calling this component inside functions where this will be undifined
-      var _this = this
-
       // Show the loading progress
       this.showLoading(true)
-
-      // fetch the geojson from server
-      axios.get('/stands/reservations?map=true')
-        .then(response => {
-          // Found the data! save it locally
-          this.geojson.reservedStands = response.data.reservedstandsmap[0]
-
-          // first check if there are any features in the geojson
-          if (!!this.geojson.reservedStands.features === false) {
-            // Exit the function if there aren't
-            this.showLoading(false)
-            return
-          }
-
-          // only add the source if the source has not been added before
-          if (!this.map.getSource('resevedStands')) {
-            // add source
-            this.map.addSource('reservedStands', {
-              type: 'geojson',
-              'data': _this.geojson.reservedStands
-            })
-          }
-
-          // Destroy any layer for reserved stands and add a new one
-          if (this.map.getLayer('reservedStands')) {
-            this.map.removeLayer('reservedStands')
-          }
-
-          // Define the reservedStandsStyle
-          let reservedStandsStyle = {
-            'id': 'reservedStands',
-            'type': 'fill',
-            'source': 'reservedStands',
-            'paint': {
-              'fill-color': 'orange',
-              'fill-opacity': 0.7,
-              'fill-outline-color': 'sienna'
-            }
-          }
-
-          // Add stands layer
-          this.map.addLayer(reservedStandsStyle)
-
-          // Then register the layer with the component's data
-          this.layers.push('reservedStands')
-
-          // Then register the style  with the component's data
-          this.layerStyles.push(reservedStandsStyle)
-
-          this.popups.reservedStands = function (feature) {
-            let stand = feature.properties
-
-            let popupHTML = `
-            <div clas = "ui list">
-              <div class = "item">
-                <div class = "ui basic orange inverted segment">RESERVED</div>
-              </div>
-              <br>
-              <div class = "item">
-                <h3 class = "ui header">Stand <div class="ui horizontal orange label"> ${stand.standid} </div></h3>
-
-                <div class = "ui divider"></div>
-
-              </div>
-
-              <div class = "item">
-                <div class = "content">
-                  <strong class="header">Reserved By</strong>
-                  <div class = "description">
-                    ${stand.firstname} ${stand.surname}
-                  </div>
-                </div>
-              </div>
-
-              <div class = "item">
-                <div class = "content">
-                  <strong class="header">Reserved</strong>
-                  <div class = "description">
-                    ${_this.humaniseDate(stand.reservationdate)}
-                  </div>
-                </div>
-              </div>
-
-              <div class = "item">
-                <div class = "content">
-                  <strong class="header">Expiring</strong>
-                  <div class = "description">
-                    <div class = "ui warning message">
-                      ${_this.humaniseDate(stand.expirydate)}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            `
-            return popupHTML
-          }
-
-          // the menu variable to be shown in the tabular menu
-          let reservedStandsMenu = {
-            id: 'reservedStands',
-            title: 'Reserved',
-            active: true
-          }
-
-          // register the menu only if it has not been registered
-          if (this.menus.find(menu => { return menu.id === reservedStandsMenu.id }) === undefined) {
-            this.menus.push(reservedStandsMenu)
-          }
-
-          // Then select the menu deselecting others in the process
-          this.selectMenu(reservedStandsMenu)
-
-          // Disable the loading progress
-          this.showLoading(false)
-        })
-      .catch(err => {
-        if (err) {
-          console.log(err)
-
-          // Disable the loading progress
-          this.showLoading(false)
-        }
-      })
+      this.$store.dispatch('getReservedStands')
     },
 
     /*
@@ -885,7 +762,7 @@ export default {
       switch (selectedStandMenu.id) {
         case 'reservedStands':
           _this.standsList = []
-          dynamicallyPushStands(this.geojson.reservedStands.features)
+          dynamicallyPushStands(this.reservedStands.features)
           break
 
         case 'soldStands':
@@ -949,7 +826,7 @@ export default {
 
       switch (selectedStandMenu.id) {
         case 'reservedStands':
-          let feature = _this.geojson.reservedStands.features.find(feature => {
+          let feature = _this.reservedStands.features.find(feature => {
             return feature.properties.standid === stand.standid
           })
 
@@ -1305,6 +1182,119 @@ export default {
 
       // Then select the menu deselecting others in the process
       this.selectMenu(availableStandsMenu)
+
+      // Disable the loading progress
+      this.showLoading(false)
+    },
+
+    reservedStands () {
+      // first check if there are any features in the geojson
+      if (!!this.reservedStands.features === false) {
+        // Exit the function if there aren't
+        this.showLoading(false)
+        return
+      }
+
+      // only add the source if the source has not been added before
+      if (!this.map.getSource('resevedStands')) {
+        // add source
+        this.map.addSource('reservedStands', {
+          type: 'geojson',
+          'data': this.reservedStands
+        })
+      }
+
+      // Destroy any layer for reserved stands and add a new one
+      if (this.map.getLayer('reservedStands')) {
+        this.map.removeLayer('reservedStands')
+      }
+
+      // Define the reservedStandsStyle
+      let reservedStandsStyle = {
+        'id': 'reservedStands',
+        'type': 'fill',
+        'source': 'reservedStands',
+        'paint': {
+          'fill-color': 'orange',
+          'fill-opacity': 0.7,
+          'fill-outline-color': 'sienna'
+        }
+      }
+
+      // Add stands layer
+      this.map.addLayer(reservedStandsStyle)
+
+      // Then register the layer with the component's data
+      this.layers.push('reservedStands')
+
+      // Then register the style  with the component's data
+      this.layerStyles.push(reservedStandsStyle)
+
+      let _this = this
+      this.popups.reservedStands = function (feature) {
+        let stand = feature.properties
+
+        let popupHTML = `
+        <div clas = "ui list">
+          <div class = "item">
+            <div class = "ui basic orange inverted segment">RESERVED</div>
+          </div>
+          <br>
+          <div class = "item">
+            <h3 class = "ui header">Stand <div class="ui horizontal orange label"> ${stand.standid} </div></h3>
+
+            <div class = "ui divider"></div>
+
+          </div>
+
+          <div class = "item">
+            <div class = "content">
+              <strong class="header">Reserved By</strong>
+              <div class = "description">
+                ${stand.firstname} ${stand.surname}
+              </div>
+            </div>
+          </div>
+
+          <div class = "item">
+            <div class = "content">
+              <strong class="header">Reserved</strong>
+              <div class = "description">
+                ${_this.humaniseDate(stand.reservationdate)}
+              </div>
+            </div>
+          </div>
+
+          <div class = "item">
+            <div class = "content">
+              <strong class="header">Expiring</strong>
+              <div class = "description">
+                <div class = "ui warning message">
+                  ${_this.humaniseDate(stand.expirydate)}
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        `
+        return popupHTML
+      }
+
+      // the menu variable to be shown in the tabular menu
+      let reservedStandsMenu = {
+        id: 'reservedStands',
+        title: 'Reserved',
+        active: true
+      }
+
+      // register the menu only if it has not been registered
+      if (this.menus.find(menu => { return menu.id === reservedStandsMenu.id }) === undefined) {
+        this.menus.push(reservedStandsMenu)
+      }
+
+      // Then select the menu deselecting others in the process
+      this.selectMenu(reservedStandsMenu)
 
       // Disable the loading progress
       this.showLoading(false)
