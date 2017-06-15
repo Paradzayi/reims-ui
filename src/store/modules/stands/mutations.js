@@ -25,5 +25,14 @@ export default {
 
   [types.RECIEVE_SOLD_STANDS] (state, payload) {
     state.geojson.soldStands = payload
+  },
+
+  [types.CLEAR_ALL_STANDS] (state, payload) {
+    for (let key in state.geojson) {
+      state.geojson[key] = key === 'cities'
+        ? state.geojson[key]
+        : {}
+    }
   }
+
 }
