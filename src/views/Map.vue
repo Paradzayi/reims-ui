@@ -291,14 +291,6 @@ export default {
   data () {
     return {
 
-      // The geogarphies that will be laid onto the map
-      geojson: {
-        allStands: {},
-        availableStands: {},
-        reservedStands: {},
-        soldStands: {}
-      },
-
       // initialisation options for mapbox
       mapOptions: {
         container: 'mapview', // container id
