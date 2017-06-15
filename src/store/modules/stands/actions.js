@@ -31,5 +31,12 @@ export default {
       .then(reservedStands => {
         commit(types.RECIEVE_RESERVED_STANDS, reservedStands)
       })
+  },
+
+  getSoldStands ({ commit }) {
+    api.stands.getSoldStands()
+      .then(soldStands => {
+        commit(types.RECIEVE_SOLD_STANDS, soldStands)
+      })
   }
 }
