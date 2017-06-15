@@ -340,7 +340,7 @@ export default {
     // Show the loading progress
     this.showLoading(true)
 
-    // Initilise the map and fetch the cadastre and stands (static parts of the map)
+    // Initilise the map and fetch the cities (static parts of the map)
     this.initMap()
     this.fetchBaseItems()
   },
