@@ -483,6 +483,8 @@ export default {
     addLoadEvent () {
       // Listen to the load event
       this.map.on('load', () => {
+        this.updateCitiesSource()
+        this.updateCitiesLayer()
         // Add the Naviagtion control that allows one to pan and zoom the map
         this.map.addControl(new mapboxgl.NavigationControl())
 
@@ -1331,15 +1333,6 @@ export default {
       if (this.searchStandString === '') {
         this.showStandsByMenu()
       }
-    },
-
-    /*
-      Update the cities sources and layers if the cities (from vuex)
-      changes
-    */
-    cities () {
-      this.updateCitiesSource()
-      this.updateCitiesLayer()
     }
   }
 }
