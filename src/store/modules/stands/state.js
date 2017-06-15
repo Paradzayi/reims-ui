@@ -10,5 +10,7 @@ export default {
     availableStands: {},
     reservedStands: {},
     soldStands: {}
-  }
+  },
+
+  standsList: []
 }
