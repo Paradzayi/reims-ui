@@ -13,12 +13,12 @@
         <p>Stand {{stand.standid}} is {{stand.status}}.</p>
 
         <!--Show reserve button if the stand is available -->
-        <button class="ui orange basic button"
+        <button class="ui orange basic small button"
           @click="reserveStand"
           v-if="stand.status === 'available'">RESERVE</button>
 
         <!--Show buy button if the user reserved the stand (if reserved) or if the stand is available -->
-        <button class="ui green basic button"
+        <button class="ui green basic small button"
           v-if="stand.status === 'available'">BUY</button>
       </div>
     </div>
