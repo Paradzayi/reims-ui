@@ -37,6 +37,15 @@ export default {
 
   [types.NEW_STANDS_LIST] (state, payload) {
     state.standsList = payload
+  },
+
+  [types.NEW_LAYER] (state, payload) {
+    state.layers.push(payload)
+  },
+
+  [types.TOGGLE_LAYER] (state, payload) {
+    let layer = state.layers.find(layer => layer.id === payload)
+    layer.active = !layer.active
   }
 
 }
