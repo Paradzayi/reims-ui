@@ -388,26 +388,14 @@ export default {
       add or remove layers. Says no to frequent server requests
     */
     toggleLayer (value) {
-      if (this.map.getLayer(value)) {
-        // Remove the layer from the map
-        this.map.removeLayer(value)
-        this.popup.remove()
+      if (this.isLayerInMap(value) === true) {
+        const currentVisibility = this.map.getLayoutProperty(value, 'visibility')
+        const visibility = currentVisibility === 'visible'
+          ? 'none'
+          : 'visible'
 
-        // Register the layer
-        this.layers.splice(this.layers.indexOf('reservedStands'), 1)
-      } else {
-        // Code to add the layer again
-        let layer = this.layerStyles.find(layer => {
-          return layer.id === value
-        })
-
-        // Only add the layer if it is found
-        if (layer) {
-          this.map.addLayer(layer)
-
-          // Then register the layer with the component's data
-          this.layers.push('reservedStands')
-        }
+        this.map.setLayoutProperty(value, 'visibility', visibility)
+        this.$store.commit('TOGGLE_LAYER', value)
       }
     },
 
