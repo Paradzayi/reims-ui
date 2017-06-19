@@ -12,5 +12,7 @@ export default {
     soldStands: {}
   },
 
-  standsList: []
+  standsList: [],
+
+  layers: []
 }
