@@ -9,5 +9,7 @@ export default{
 
   soldStands: state => state.geojson.soldStands,
 
-  standsList: state => state.standsList
+  standsList: state => state.standsList,
+
+  activeLayers: state => state.layers.filter(layer => layer.active === true)
 }
