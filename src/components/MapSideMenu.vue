@@ -11,17 +11,12 @@
           </div>
         </div>
 
-        <!-- The reservedStads menu item-->
-        <div
-          :class="{active: allStands.features, item: true, link: true}">
-
+        <!-- The allStands menu item-->
+        <div :class="{active: allStands.features, item: true, link: true}">
           <!-- Fetch reserved items when you click here -->
-          <a
-            @click="fetchAllStands">
-            All Stands
-          </a>
+          <a @click="fetchAllStands">All Stands</a>
 
-          <!-- show the user a red zero if there are no reserved items -->
+          <!-- show the user a red zero if there are no stands at all -->
           <div
             class="ui red basic label"
             v-if = "allStands.type && !!allStands.features === false">
@@ -31,13 +26,12 @@
           <!-- show the user the number of all stands -->
           <div
             class="ui brown basic label"
-            v-if = "allStands.features">
-            {{allStands.features.length }}
+            v-if="allStands.features">
+            {{ allStands.features.length }}
           </div>
 
           <!-- Allow the user to toggle the layers if they are present -->
-          <div
-            v-if = "allStands.features">
+          <div v-if="allStands.features">
             <p>
               <div class="ui slider checkbox">
                 <input
@@ -49,17 +43,12 @@
             </p>
           </div>
 
-        </div><!--/ The reservedStands menu item -->
+        </div><!--/ The allStands menu item -->
 
         <!-- The availableStads menu item-->
-        <div
-          :class="{active: availableStands.features, item: true, link: true}">
-
+        <div :class="{active: availableStands.features, item: true, link: true}">
           <!-- Fetch reserved items when you click here -->
-          <a
-            @click="fetchAvailableStands">
-            Available Stands
-          </a>
+          <a @click="fetchAvailableStands">Available Stands</a>
 
           <!-- show the user a red zero if there are no available items -->
           <div
@@ -76,8 +65,7 @@
           </div>
 
           <!-- Allow the user to toggle the layers if they are present -->
-          <div
-            v-if = "availableStands.features">
+          <div v-if="availableStands.features">
             <p>
               <div class="ui slider checkbox">
                 <input
@@ -89,17 +77,12 @@
             </p>
           </div>
 
-        </div><!--/ The reservedStands menu item -->
+        </div><!--/ The availableStands menu item -->
 
         <!-- The reservedStads menu item-->
-        <div
-          :class="{active: reservedStands.features, item: true, link: true}">
-
+        <div :class="{active: reservedStands.features, item: true, link: true}">
           <!-- Fetch reserved items when you click here -->
-          <a
-            @click="fetchReservedStands">
-            Reserved Stands
-          </a>
+          <a @click="fetchReservedStands">Reserved Stands</a>
 
           <!-- show the user a red zero if there are no reserved items -->
           <div
@@ -116,8 +99,7 @@
           </div>
 
           <!-- Allow the user to toggle the layers if they are present -->
-          <div
-            v-if = "reservedStands.features">
+          <div v-if="reservedStands.features">
             <p>
               <div class="ui slider checkbox">
                 <input
@@ -131,16 +113,10 @@
 
         </div><!--/ The reservedStands menu item -->
 
-        <!-- The reservedStads menu item-->
-        <div
-          :class="{active: soldStands.features, item: true, link: true}">
-
+        <!-- The soldStands menu item-->
+        <div :class="{active: soldStands.features, item: true, link: true}">
           <!-- Fetch reserved items when you click here -->
-          <a
-            @click="fetchSoldStands">
-            Sold Stands
-          </a>
-
+          <a @click="fetchSoldStands">Sold Stands</a>
 
           <!-- show the user a red zero if there are no sold items -->
           <div
@@ -157,8 +133,7 @@
           </div>
 
           <!-- Allow the user to toggle the layers if they are present -->
-          <div
-            v-if = "soldStands.features">
+          <div v-if = "soldStands.features">
             <p>
               <div class="ui slider checkbox">
                 <input
@@ -172,10 +147,7 @@
 
         </div><!--/ The soldStands menu item -->
 
-        <!-- Other menu items will come down here -->
-
       </div>
-
 </template>
 
 <script>
@@ -216,7 +188,6 @@
       },
 
       fetchAvailableStands () {
-        console.log('fetchng available stands')
         this.$emit('fetchAvailableStands')
       },
 
