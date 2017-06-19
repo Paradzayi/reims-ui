@@ -186,6 +186,16 @@
       availableStands: Object,
       reservedStands: Object,
       soldStands: Object
+    },
+
+    methods: {
+      clearAllFeatures () {
+        // Loop through the geojsons and clear them all
+        this.$store.commit('CLEAR_ALL_STANDS')
+
+        // notify the parent that all stands have been cleared
+        this.$emit('clearAllFeatures')
+      }
     }
   }
 </script>
