@@ -154,9 +154,6 @@ export default {
         soldStands: function () {}
       },
 
-      // Define the queryable layers
-      layers: [],
-
       // The tabular menus to toggle between different types of stand
       // to show on the map
       menus: [],
@@ -222,17 +219,11 @@ export default {
     */
     addClickEvent () {
       this.map.on('click', e => {
-        // Loop through all the registered (ones available for popup info)
-        this.layers.forEach(layer => {
-          // Deregister the layer if it does not exist on the map
-          if (!this.map.getLayer(layer)) {
-            this.layers.splice(this.layers.indexOf(layer), 1)
-          }
-        })
-
+        let layers = []
+        this.layers.forEach(layer => layers.push(layer.id))
         // Query the features on the map
         let features = this.map.queryRenderedFeatures(e.point, {
-          layers: this.layers
+          layers
         })
 
         // Change the cursor style as a UI indicator.
@@ -277,17 +268,11 @@ export default {
     addMouseMoveEvent () {
       // Listen to the mousemove event
       this.map.on('mousemove', e => {
-        // Loop through all the registered (ones available for popup info)
-        this.layers.forEach(layer => {
-          // Deregister the layer if it does not exist on the map
-          if (!this.map.getLayer(layer)) {
-            this.layers.splice(this.layers.indexOf(layer), 1)
-          }
-        })
-
+        let layers = []
+        this.layers.forEach(layer => layers.push(layer.id))
         // Query the features on the map
         let features = this.map.queryRenderedFeatures(e.point, {
-          layers: this.layers
+          layers
         })
 
         // Change the cursor style as a UI indicator.
