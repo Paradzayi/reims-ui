@@ -57,7 +57,7 @@
 
           <!-- Fetch reserved items when you click here -->
           <a
-            @click="fetchavailableStands">
+            @click="fetchAvailableStands">
             Available Stands
           </a>
 
@@ -195,6 +195,23 @@
 
         // notify the parent that all stands have been cleared
         this.$emit('clearAllFeatures')
+      },
+
+      fetchAllStands () {
+        this.$emit('fetchAllStands')
+      },
+
+      fetchAvailableStands () {
+        console.log('fetchng available stands')
+        this.$emit('fetchAvailableStands')
+      },
+
+      fetchReservedStands () {
+        this.$emit('fetchReservedStands')
+      },
+
+      fetchSoldStands () {
+        this.$emit('fetchSoldStands')
       }
     }
   }
