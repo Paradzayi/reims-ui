@@ -14,11 +14,6 @@
       </buy-summary>
       <!-- The menu-->
       <MapSideMenu
-        :allStands="allStands"
-        :availableStands="availableStands"
-        :reservedStands="reservedStands"
-        :soldStands="soldStands"
-
         @clearAllFeatures="clearAllFeatures"
         @fetchAllStands="fetchAllStands"
         @fetchAvailableStands="fetchAvailableStands"

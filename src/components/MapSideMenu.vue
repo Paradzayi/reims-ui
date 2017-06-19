@@ -181,16 +181,24 @@
 <script>
   export default {
     name: 'MapSideMenu',
-    props: {
-      allStands: Object,
-      availableStands: Object,
-      reservedStands: Object,
-      soldStands: Object
-    },
-
     computed: {
       activeLayers () {
         return this.$store.getters.activeLayers
+      },
+      allStands () {
+        return this.$store.getters.allStands
+      },
+
+      availableStands () {
+        return this.$store.getters.availableStands
+      },
+
+      reservedStands () {
+        return this.$store.getters.reservedStands
+      },
+
+      soldStands () {
+        return this.$store.getters.soldStands
       }
     },
 
