@@ -608,9 +608,7 @@ export default {
       the view was first loaded.
     */
     clearAllFeatures () {
-      // Loop through the geojsons and clear them all
-      this.$store.commit('CLEAR_ALL_STANDS')
-       // remove the Layers and coresponding Sources
+      // remove the Layers and coresponding Sources
       this.layers.forEach(layer => {
         this.map.removeLayer(layer)
         this.map.removeSource(layer)
