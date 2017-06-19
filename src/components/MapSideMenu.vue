@@ -179,13 +179,13 @@
 </template>
 
 <script>
-    export default {
-        name: 'MapSideMenu',
-        props: {
-            allStands: Object,
-            availableStands: Object,
-            reservedStands: Object,
-            soldStands: Object
-        }
+  export default {
+    name: 'MapSideMenu',
+    props: {
+      allStands: Object,
+      availableStands: Object,
+      reservedStands: Object,
+      soldStands: Object
     }
+  }
 </script>
