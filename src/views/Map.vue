@@ -158,10 +158,6 @@ export default {
       // Define the queryable layers
       layers: [],
 
-      // Define the style of the layers so that
-      // they can be used to recreate the layer during toggling
-      layerStyles: [],
-
       // The tabular menus to toggle between different types of stand
       // to show on the map
       menus: [],
@@ -717,9 +713,6 @@ export default {
       // Then register the layer with the component's data
       this.layers.push('allStands')
 
-      // Then register the style  with the component's data
-      this.layerStyles.push(allStandsStyle)
-
       this.popups.allStands = function (feature) {
         let stand = feature.properties
 
@@ -823,9 +816,6 @@ export default {
       // Then register the layer with the component's data
       this.layers.push('availableStands')
 
-      // Then register the style  with the component's data
-      this.layerStyles.push(availableStandsStyle)
-
       this.popups.availableStands = function (feature) {
         let stand = feature.properties
 
@@ -928,9 +918,6 @@ export default {
 
       // Then register the layer with the component's data
       this.layers.push('reservedStands')
-
-      // Then register the style  with the component's data
-      this.layerStyles.push(reservedStandsStyle)
 
       let _this = this
       this.popups.reservedStands = function (feature) {
@@ -1044,9 +1031,6 @@ export default {
 
       // Then register the layer with the component's data
       this.layers.push('soldStands')
-
-      // Then register the style  with the component's data
-      this.layerStyles.push(soldStandsStyle)
 
       this.popups.soldStands = function (feature) {
         let stand = feature.properties
