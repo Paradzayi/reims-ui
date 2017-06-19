@@ -355,7 +355,7 @@ export default {
       fetch data for the all the standsthat are alvailabe
       for sale or for reservations and store it in the data() function
     */
-    fetchavailableStands () {
+    fetchAvailableStands () {
       this.showLoading(true)
       this.$store.dispatch('getAvailableStands')
     },
