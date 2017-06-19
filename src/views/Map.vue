@@ -705,6 +705,9 @@ export default {
           'fill-color': 'brown',
           'fill-opacity': 0.7,
           'fill-outline-color': 'white'
+        },
+        'layout': {
+          'visibility': 'visible'
         }
       }
 
@@ -808,6 +811,9 @@ export default {
           'fill-color': 'purple',
           'fill-opacity': 0.7,
           'fill-outline-color': 'white'
+        },
+        'layout': {
+          'visibility': 'visible'
         }
       }
 
@@ -911,6 +917,9 @@ export default {
           'fill-color': 'orange',
           'fill-opacity': 0.7,
           'fill-outline-color': 'sienna'
+        },
+        'layout': {
+          'visibility': 'visible'
         }
       }
 
@@ -1024,6 +1033,9 @@ export default {
           'fill-color': 'green',
           'fill-opacity': 0.7,
           'fill-outline-color': 'sienna'
+        },
+        'layout': {
+          'visibility': 'visible'
         }
       }
 
