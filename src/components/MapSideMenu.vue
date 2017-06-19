@@ -42,7 +42,7 @@
               <div class="ui slider checkbox">
                 <input
                   type="checkbox"
-                  :checked="isLayerInMap('allStands')"
+                  :checked="isLayerActive('allStands')"
                   @click="toggleLayer('allStands')">
                 <label>Show in map</label>
               </div>
@@ -82,7 +82,7 @@
               <div class="ui slider checkbox">
                 <input
                   type="checkbox"
-                  :checked="isLayerInMap('availableStands')"
+                  :checked="isLayerActive('availableStands')"
                   @click="toggleLayer('availableStands')">
                 <label>Show in map</label>
               </div>
@@ -122,7 +122,7 @@
               <div class="ui slider checkbox">
                 <input
                   type="checkbox"
-                  :checked="isLayerInMap('reservedStands')"
+                  :checked="isLayerActive('reservedStands')"
                   @click="toggleLayer('reservedStands')">
                 <label>Show in map</label>
               </div>
@@ -163,7 +163,7 @@
               <div class="ui slider checkbox">
                 <input
                   type="checkbox"
-                  :checked="isLayerInMap('soldStands')"
+                  :checked="isLayerActive('soldStands')"
                   @click="toggleLayer('soldStands')">
                 <label>Show in map</label>
               </div>
@@ -186,6 +186,12 @@
       availableStands: Object,
       reservedStands: Object,
       soldStands: Object
+    },
+
+    computed: {
+      activeLayers () {
+        return this.$store.getters.activeLayers
+      }
     },
 
     methods: {
@@ -212,6 +218,14 @@
 
       fetchSoldStands () {
         this.$emit('fetchSoldStands')
+      },
+
+      toggleLayer (layer) {
+        this.$emit('toggleLayer', layer)
+      },
+
+      isLayerActive (layerId) {
+        return this.activeLayers.find(layer => layer.id === layerId)
       }
     }
   }
