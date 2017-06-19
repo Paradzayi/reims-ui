@@ -120,6 +120,10 @@ export default {
     // zoom to the stand
     standsList () {
       return this.$store.getters.standsList
+    },
+
+    layers () {
+      return this.$store.getters.layers
     }
   },
   /*
@@ -612,7 +616,6 @@ export default {
 
       // then clear everything else
       this.menus = []
-      this.layers = []
       this.popup.remove()
     },
 
@@ -711,7 +714,10 @@ export default {
       this.map.addLayer(allStandsStyle)
 
       // Then register the layer with the component's data
-      this.layers.push('allStands')
+      this.$store.commit('NEW_LAYER', {
+        id: 'allStands',
+        active: true
+      })
 
       this.popups.allStands = function (feature) {
         let stand = feature.properties
@@ -814,7 +820,10 @@ export default {
       this.map.addLayer(availableStandsStyle)
 
       // Then register the layer with the component's data
-      this.layers.push('availableStands')
+      this.$store.commit('NEW_LAYER', {
+        id: 'availableStands',
+        active: true
+      })
 
       this.popups.availableStands = function (feature) {
         let stand = feature.properties
@@ -917,7 +926,10 @@ export default {
       this.map.addLayer(reservedStandsStyle)
 
       // Then register the layer with the component's data
-      this.layers.push('reservedStands')
+      this.$store.commit('NEW_LAYER', {
+        id: 'reservedStands',
+        active: true
+      })
 
       let _this = this
       this.popups.reservedStands = function (feature) {
@@ -1030,7 +1042,10 @@ export default {
       this.map.addLayer(soldStandsStyle)
 
       // Then register the layer with the component's data
-      this.layers.push('soldStands')
+      this.$store.commit('NEW_LAYER', {
+        id: 'soldStands',
+        active: true
+      })
 
       this.popups.soldStands = function (feature) {
         let stand = feature.properties
