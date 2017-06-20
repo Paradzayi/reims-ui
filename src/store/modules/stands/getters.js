@@ -11,5 +11,7 @@ export default{
 
   standsList: state => state.standsList,
 
-  activeLayers: state => state.layers.filter(layer => layer.active === true)
+  activeLayers: state => state.layers.filter(layer => layer.active === true),
+
+  layers: state => state.layers
 }
