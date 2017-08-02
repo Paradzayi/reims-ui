@@ -2,7 +2,7 @@
 node_modules/
 .directory
 .eslintrc.json
-dist/
+dist
 
 npm-debug.log
 yarn-error.log
